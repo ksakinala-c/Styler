@@ -1,0 +1,213 @@
+/*	Fonts	*/
+@font-face {
+    font-family: "AbrilDisplay-Bold";
+    src: url("../fonts/webfonts/abril/abril?#iefix") format("embedded-opentype"), 
+		 url("../fonts/webfonts/abril/abril.woff2") format("woff2"), 
+		 url("../fonts/webfonts/abril/abril.woff") format("woff"), 
+		 url("../fonts/webfonts/abril/abril.ttf") format("truetype");
+}
+
+body img{
+	max-width:100%;
+}
+
+/*	Banner	*/
+.banner img{
+	width:100%;
+}
+
+/*	Trail Dress	*/
+.trail-dress{
+	border:1px solid #aaaaaa;
+	border-radius:10px;
+	padding:20px;
+	margin:40px 0;
+	box-shadow:1px 1px 15px #000;
+}
+.trail-dress h3{
+	margin:10px 0;
+}
+.trail-dress p{
+	font-size:13px;
+	margin:0 0 10px 0;
+}
+.trail-dress .list li{
+	font-size:13px;
+	color:#000;
+	line-height:1.5em;
+}
+.trail-dress p a, .trail-dress li a{
+	color:#664d9f;
+	text-decoration:underline;
+}
+.trail-dress p a:hover, .trail-dress li a:hover{
+	text-decoration:none;
+	color:#0099c8;
+}
+.trail-dress > a{
+	color:#0099c8;
+}
+
+/*	Classic	*/
+.classic{
+	padding:3% 7%;
+}
+.classic h1{
+    font-family: "AbrilDisplay-Bold";
+	color:#2d3345;
+	font-weight:bold;
+}
+.classic p.price{
+	color:#a31c20;
+	font-size:15px;
+	font-weight:bold;
+}
+.classic .fit-test{
+	border:2px solid #b37c86;
+	border-radius:10px;
+	padding:20px;
+	margin:0 10% 0 0;
+}
+.classic .fit-test h3{
+    font-family: "AbrilDisplay-Bold";
+	margin:0px;
+}
+.classic .fit-test p{
+	margin:10px 0;
+	color:#000;
+}
+.classic .fit-test p b{
+	font-size:18px;
+}
+.classic-right p{
+	padding:10% 0;
+}
+.classic-right a.addtocart{
+	color:#fff;
+	background:#a31c20;
+	border:1px solid #a31c20;
+	padding:15px 30px;
+	font-size:18px;
+	text-transform:uppercase;
+}
+.classic-right a.addtocart:hover{
+	color:#a31c20;
+	background:#fff;
+	border:1px solid #a31c20;
+	text-decoration:none;
+}
+.classic-right .mag{
+	margin:20px 0;
+}
+/*	Magnify	*/
+.mag img {
+    max-width: 100%;
+	width:120px;
+}
+.magnify {
+    position: relative;
+    cursor: none
+}
+.magnify-large {
+    position: absolute;
+    display: none;
+    width: 175px;
+    height: 175px;
+
+    -webkit-box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.85), 0 0 7px 7px rgba(0, 0, 0, 0.25), inset 0 0 40px 2px rgba(0, 0, 0, 0.25);
+       -moz-box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.85), 0 0 7px 7px rgba(0, 0, 0, 0.25), inset 0 0 40px 2px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.85), 0 0 7px 7px rgba(0, 0, 0, 0.25), inset 0 0 40px 2px rgba(0, 0, 0, 0.25);
+    
+    -webkit-border-radius: 100%;
+       -moz-border-radius: 100%;
+             border-radius: 100%
+}
+
+/*	Overview	*/
+.overview{
+	margin:3% 7%;
+	background:url(../images/overview-lines.png) no-repeat left;
+	border-bottom:1px solid #ccc;
+}
+@media (max-width: 992px) {
+	.overview{
+		background:#fff;
+	}
+}
+.overview p{
+	font-size:13px;
+}
+.overview .title{
+	margin:20px 0 40px 0;
+}
+.overview .title i{
+	font-style:italic;
+	border:1px solid #000;
+	padding:6px 11px 6px 9px;
+	border-radius:50px;
+}
+.overview-left .box{
+	padding:9% 0;
+}
+.overview .box{
+	margin:0 0 20% 0;
+}
+@media (max-width: 767px) {
+	.overview .box{
+		padding:0px !important;
+		margin:30px 0 !important;
+	}
+}
+.overview .box h4{
+	font-size:14px;
+	margin:0px;
+	font-weight:bold;
+}
+.overview .box a{
+	border:1px solid #a31c20;
+	color:#a31c20;
+	text-transform:uppercase;
+	padding:2% 4%;
+	font-size:13px;
+}
+.overview .box a:hover{
+	background:#a31c20;
+	color:#fff;
+	text-decoration:none;
+}
+
+/*	Confidence	*/
+.confidence{
+	background:url(../images/confidence-bg.png);
+	padding:40px 0;
+	margin:30px 0 0 0;
+}
+.confidence h2{
+    font-family: "AbrilDisplay-Bold";
+	color:#2d3345;
+	font-weight:bold;
+	font-size:3em;
+}
+.confidence p{
+	color:#888888;
+}
+.confidence .container > p{
+	margin:0 0 50px 0;
+}
+.confidence .container > p a{
+	border:2px solid #888888;
+	color:#888888;
+	text-transform:uppercase;
+	padding:1% 4%;
+}
+.confidence .container > p a:hover{
+	background:#888888;
+	color:#fff;
+	text-decoration:none;
+}
+.confidence .c-box{
+	padding:0 0 40px 0;
+}
+.confidence .c-box p{
+	margin:30px 0 20px 0;
+}

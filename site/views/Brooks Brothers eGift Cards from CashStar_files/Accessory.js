@@ -1,0 +1,1 @@
+var Accessory;!function(){"use strict";Accessory=Backbone.RelationalModel.extend({idAttribute:"code"})}();

@@ -1,0 +1,4 @@
+[11-Sep-2015 10:19:15 UTC] PHP Fatal error:  Using $this when not in object context in /home/stylior/public_html/store/site/views/includes/header.php on line 2
+[11-Sep-2015 10:20:28 UTC] PHP Fatal error:  Using $this when not in object context in /home/stylior/public_html/store/site/views/includes/header.php on line 2
+[16-Oct-2015 19:57:41 UTC] PHP Fatal error:  Using $this when not in object context in /home/stylior/public_html/site/views/includes/header.php on line 2
+[26-Nov-2015 20:22:11 UTC] PHP Fatal error:  Using $this when not in object context in /home/stylior/public_html/site/views/includes/header.php on line 2

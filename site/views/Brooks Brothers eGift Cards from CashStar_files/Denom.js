@@ -1,0 +1,1 @@
+var Denom;!function(){"use strict";Denom=Backbone.Model.extend({defaults:{amount:"",catalog_fixed:jsonData.catalog_fixed,is_predenom:!1,multipack_denom:"",picker_denom:"",predenom_denom:""}})}();

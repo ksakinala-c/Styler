@@ -1,0 +1,1440 @@
+<?php
+	class Cart extends Controller
+	{ 
+
+	function Cart() 
+	{
+		parent::Controller();
+		$this->load->model('cart_model');
+		$this->load->model('home_model');
+		$this->load->model('user_model');
+		$this->load->model('account_model');
+		$this->load->model('hmlistpage_model');
+	}
+	function new_measure()
+	{
+		$this->load->view('new_measure', $data);
+	}
+	function wishlist($style,$pid){
+		if($this->session->userdata('userid') == ''){
+			redirect($this->config->item('base_url')."home/login");
+		} else {
+		$this->load->library('session');
+		$data['userid'] = $this->session->userdata('userid');
+		$data['style_id'] = $style;
+		$data['pid'] = $pid;
+		$data['added_date'] = date('Y-m-d');
+		if($response = $this->home_model->add_wishlist($data))
+		{
+			$this->session->set_flashdata('item', 'Product Added to your wishlist.');
+			redirect($this->config->item('base_url')."/home/details/".$style."/".$pid);
+			exit();
+		}
+		else 
+		{
+			$data['L_strErrorMessage'] = 'Some Errors prevented from adding data,please try later.';
+		}
+		}
+	}
+	/* end stylior function*/
+ 
+ 	function checkpincode($id){ 
+		$this->load->model('product_model'); 
+		$productxml = $this->product_model->checkpincode($id);
+			if($productxml == ''){
+			echo '0'; die;
+		} else {
+			echo '1';die;
+		}
+	}  
+ 	 
+	function checkqty($pid,$attrid,$qty)
+	{
+		$valid = $this->cart_model->checkqty($pid,$attrid);
+ 		if($valid != ''){
+			$allowedqty = $valid->quantityinstock;
+			if($allowedqty >= $qty){
+				echo "1";die;
+			}
+			else
+			{
+				echo "2";die;
+			}
+		}
+		else
+		{
+			echo "2";die;
+		}
+
+	}
+
+	function addtowishlist($id,$userid){
+ 		$this->load->model('product_model');
+		$data = $this->product_model->checkwishlist($id,$userid);
+		if($data == '0'){ 
+			$this->product_model->addtowishlist($id,$userid);
+			echo '0';die;
+		} else {
+			echo '1';die;
+		}
+	}
+
+	function addcart3d(){
+ 
+ 		$data      = $_POST['imagedata'];
+		$timeimage = time();
+  		$details   = $_POST['details'];
+		$price     = $_POST['price'];
+		$productid = $_POST['productid'];
+		$pname     = $_POST['pname'];
+		$subcatid  = $_POST['subcatid'];
+		//assign the session data MSYS009
+	if(isset($_SESSION['selected3dInfo']) && !empty($_SESSION['selected3dInfo']))
+		{
+				$data      = $_SESSION['selected3dInfo']['data'];
+				$timeimage = time();
+				$details   = $_SESSION['selected3dInfo']['details'];
+				$price     = $_SESSION['selected3dInfo']['price'];
+				$productid = $_SESSION['selected3dInfo']['productid'];
+				$pname     = $_SESSION['selected3dInfo']['pname'];
+				$subcatid  = $_SESSION['selected3dInfo']['subcatid'];
+		}
+		$this->session->set_userdata('subcat',$subcatid);
+
+		
+		
+		$this->load->library('session');
+			
+			$newuserdata = array(
+			   'username'  => $_SESSION['username'],
+			   'userid'    => $_SESSION['userid'],
+			   'email'     => $_SESSION['email'],
+			   'insider'   => $_SESSION['insider'],
+			   'logged_in' => true
+			);
+			
+			$check = $this->session->set_userdata($newuserdata);
+
+		$data11['details']  = $details;
+		$data11['price']    = $price;
+		$data11['productid'] = $productid;
+		$data11['pname']    = $pname;
+		$data11['userid']    =  $_SESSION['userid'];
+		$data11['baseimage'] = $timeimage.".png";
+
+		$saveid = $this->cart_model->addto3dinsert($data11);
+
+		$cartprod = array(
+ 			   'id'      => $productid,
+ 			   'qty'     => '1',
+			   'price'   => $price, 
+			   'name'    => $pname,
+			   'options' => array('details'=>$details , 'imagename'=>$timeimage.".png", 'is_3d'=>'1' , 'saveid'=> $saveid) 
+ 	    );
+   
+		//print_r($cartprod);die();
+ 		$this->cart->insert($cartprod);
+		$addTocartId=$this->cart_model->insertcartindb($cartprod);
+		$this->session->set_userdata('latestcartId',$addTocartId);
+ 		$this->session->set_userdata('saveid',$saveid);
+		$file = $this->config->item('upload')."saveprofile/".$timeimage.".png";
+ 		$uri =  substr($data,strpos($data,",")+1);
+ 		file_put_contents($file, base64_decode($uri));
+		if(isset($_SESSION['selected3dInfo']) && !empty($_SESSION['selected3dInfo'])){
+			$_SESSION['selected3dInfo']='';
+	redirect($this->config->item('base_url').'home/savemeasurement','location');
+		}
+		echo "1"; exit();
+ 	}
+
+	function save3d(){
+		$data = $_POST['imagedata'];
+		$timeimage = time();
+  		$details = $_POST['details'];
+		$price   = $_POST['price'];
+		$productid = $_POST['productid'];
+		$pname     = $_POST['pname'];
+ 		 
+		 //assign the session data MSYS009
+	if(isset($_SESSION['save3dInfo']) && !empty($_SESSION['save3dInfo']))
+		{
+				$data      = $_SESSION['save3dInfo']['data'];
+				$timeimage = time();
+				$details   = $_SESSION['save3dInfo']['details'];
+				$price     = $_SESSION['save3dInfo']['price'];
+				$productid = $_SESSION['save3dInfo']['productid'];
+				$pname     = $_SESSION['save3dInfo']['pname'];
+				$subcatid  = $_SESSION['save3dInfo']['subcatid'];
+		}
+		
+		$data['details'] = $details;
+		$data['price'] = $price;
+		$data['productid'] = $productid;
+		$data['pname'] = $pname;
+		$data['userid'] =  $_SESSION['userid'];
+		$data['baseimage'] = $timeimage.".png";
+
+		$this->cart_model->addto3dinsert($data);
+ 		$file = $this->config->item('upload')."saveprofile/".$timeimage.".png";
+ 		$uri =  substr($data,strpos($data,",")+1);
+ 		file_put_contents($file, base64_decode($uri));
+		if(isset($_SESSION['save3dInfo']) && !empty($_SESSION['save3dInfo'])){
+			$_SESSION['save3dInfo']='';
+			$_SESSION['profile-flash']='Profile Saved Successfully';
+			redirect($this->config->item('base_url').'cart/viewcart','location');
+		}
+		echo "1"; exit();
+	}
+
+	function share(){
+		$data = $_POST['imagedata'];
+		$timeimage = time();
+  		$details = $_POST['details'];
+		$price   = $_POST['price'];
+		$productid = $_POST['productid'];
+		$pname     = $_POST['pname'];
+ 		 
+		/*$data['details'] = $details;
+		$data['price'] = $price;
+		$data['productid'] = $productid;
+		$data['pname'] = $pname;
+		$data['userid'] =  $_SESSION['userid'];
+		$data['baseimage'] = $timeimage.".png";
+
+		$this->cart_model->addto3dinsert($data);*/
+ 		$file = $this->config->item('upload')."saveprofile/".$timeimage.".png";
+ 		$uri =  substr($data,strpos($data,",")+1);
+ 		file_put_contents($file, base64_decode($uri));
+		echo $timeimage; die;
+		//echo "1";die;
+	}
+
+	function addtocart($style_id)
+	{
+		 
+		$monovalue     = $this->input->post('monogram');
+		if($this->input->post('monotext') !=""){
+		$monotext     = $this->input->post('monotext');		
+		}else {
+			$monotext = "Not Available";
+		}
+		$pid = $this->input->post('product_id');
+		$this->session->set_userdata('proid',$pid);
+		//echo ($this->session->userdata('proid'));die;
+		$font     = $this->input->post('fonttype');
+		$color     = $this->input->post('colour');
+		$placement = $this->input->post('placement');
+		$qty  = $this->input->post('qty');
+		 
+		if($qty == ''){
+			$qty = '1'; 
+		}
+		
+		$details = $this->cart_model->productdetails($style_id);
+		//print_r($details);die;
+		$data['err_msg'] = '';
+		$price = $details->sellingprice;
+		$data['cartprod'] = array(
+			   'id'      => $details->id,
+ 			   'qty'     => $qty,
+			   'price'   => $price, 
+			   'name'    => $details->name,
+			   'options' => array('fonts'=>$font , 'color'=>$color, 'placement'=>$placement, 'monovalue'=>$monovalue, 'monotext'=>$monotext) 
+ 	        );
+   
+		//print_r($data['cartprod']);die();
+ 		$this->cart->insert($data); 
+ 		redirect($this->config->item('base_url').'cart/mapping/'.$style_id,'refresh',$data);
+ 	}
+
+	function addgifttocart(){
+		
+		if($_POST['recipientemail'] != '' && count($_POST['recipientemail']) > 0) {
+			for($j='0';$j<count($_POST['recipientemail']);$j++) {
+				//print_r($_POST['recipientemail']);die;
+
+ 				$toname   = $_POST['recipientname'][$j];
+				$fromname = $_POST['sendername'][$j];
+				$email    = $_POST['recipientemail'][$j];
+				$message  = $_POST['message'][$j];
+				$theme    = $_POST['gift_theme_radio_'][$j];
+				$currency    = $_POST['currency'][$j];
+				//echo $currency;die;
+				   
+				$data['cartprod'] = array(
+					   'id'      => $j,
+					   'qty'     => $_POST['qty'][$j],
+					   'price'   => $_POST['totalpayable'][$j],
+					   'name'    => $_POST['recipientname'][$j],
+					   'options' => array('toname'=>$toname, 'fromname'=>$fromname,'currency'=>$currency, 'email' => $email, 'message' =>$message, 'theme'=>$theme, 'is_3d'=> '2') 
+					);
+				//print_r($data['cartprod']);die;
+				$this->cart->insert($data); 
+			}
+		}
+
+  		redirect($this->config->item('base_url').'cart/viewcart','refresh',$data);
+	}
+
+	function addmapping($style_id)
+	{
+		$details = $this->cart_model->productdetails($style_id);
+		$data['err_msg'] = '';
+		$price = $details->sellingprice;
+		$data['cartprod'] = array(
+			   'id'      => $details->id,
+ 			   'qty'     => $qty,
+			   'price'   => $price, 
+			   'name'    => $details->name,
+			   'options' => array('fonts'=>$font , 'color'=>$color, 'placement'=>$placement, 'monovalue'=>$monovalue, 'monotext'=>$monotext) 
+ 	        );
+   
+		//print_r($data['cartprod']);die();
+ 		$this->cart->insert($data); 
+ 		redirect($this->config->item('base_url').'cart/mapping/'.$style_id,'refresh',$data);
+ 	}
+ /*
+	function mapping($style_id = '')
+	{
+		if($style_id == 'saved3d'){
+				$this->session->set_userdata('saveid',$this->uri->segment(4));
+		} else { 
+		if($this->uri->segment(4) !="")
+		{
+			$newmid =  $this->uri->segment(4);
+			if($newmid != '') {
+				if($this->session->userdata('measuredid') =="") {
+					$this->session->set_userdata('measuredid',$newmid );
+					$this->session->set_userdata('updatemeasuredid','1');
+				}
+			}
+		} }
+ 		//echo ($style_id);die;
+		$data = array(); 
+		$data['L_strErrorMessage'] = "";
+		$data['err_msg'] = ""; 
+		/*if($this->input->post('measureid') !="") {
+			$this->session->set_userdata('usermdata',$this->input->post('measureid'));
+		}*/
+		//echo $this->session->userdata('measuredid');die;
+	/*	$data['style_id'] = $style_id;
+		$data['title'] = 'Stylior.com';
+		$data['keywords'] = '';
+		$data['description'] = '';
+
+		$this->load->view('body_weight_height.php',$data);
+	} */
+	
+	/*
+	 * action for filling the cart mapping details
+	 * @Author MSYS009
+	*/
+	function mapping($style_id = '')
+	{
+		if($style_id == 'saved3d'){
+				$this->session->set_userdata('saveid',$this->uri->segment(4));
+		} else { 
+		if($this->uri->segment(4) !="")
+		{
+			$newmid =  $this->uri->segment(4);
+			if($newmid != '') {
+				if($this->session->userdata('measuredid') =="") {
+					$this->session->set_userdata('measuredid',$newmid );
+					$this->session->set_userdata('updatemeasuredid','1');
+				}
+			}
+		} }
+ 		//echo ($style_id);die;
+		$data = array(); 
+		$data['L_strErrorMessage'] = "";
+		$data['err_msg'] = ""; 
+		/*if($this->input->post('measureid') !="") {
+			$this->session->set_userdata('usermdata',$this->input->post('measureid'));
+		}*/
+		//echo $this->session->userdata('measuredid');die;
+		$data['style_id'] = $style_id;
+		$data['title'] = 'Stylior.com';
+		$data['keywords'] = '';
+		$data['description'] = '';
+
+		$this->load->view('body_weight_height_new.php',$data);
+	}
+
+	function custommesurements($style_id)
+	{
+	
+		if($style_id == 'saved3d'){
+				$this->session->set_userdata('saveid',$this->uri->segment(4));
+				$this->session->set_userdata('latestcartId',$this->uri->segment(5));
+		} else { 
+		if($this->uri->segment(4) !="")
+		{
+			$newmid =  $this->uri->segment(4);
+			if($newmid != '') {
+				if($this->session->userdata('measuredid') =="") {
+					$this->session->set_userdata('measuredid',$newmid );
+					$this->session->set_userdata('updatemeasuredid','1');
+				}
+			}
+		} }
+	
+		//echo ($style_id);die;
+		$data = array(); 
+		$data['L_strErrorMessage'] = "";
+		$data['err_msg'] = ""; 
+		/*if($this->input->post('measureid') !="") {
+			$this->session->set_userdata('usermdata',$this->input->post('measureid'));
+		}*/
+		//echo $this->session->userdata('measuredid');die;
+		$data['style_id'] = $style_id;
+		$data['title'] = 'Stylior.com';
+		$data['keywords'] = '';
+		$data['description'] = '';
+	
+		$this->load->library('user_agent');
+
+		$cartdata = array(
+ 				'styleid'    =>$style_id,
+				'cqty'      => '1',
+		);
+		$this->session->set_userdata($cartdata);
+		$data['title'] = 'Stylior.com';
+		$data['keywords'] = '';
+		$data['description'] = '';
+		
+		$this->load->view('customusermeasurement.php',$data);
+	}
+	
+	function mapping1($style_id)
+	{
+		//echo $this->input->post('measureid');die;
+		//echo $style_id;die;
+		$data = array(); 
+		$data['L_strErrorMessage'] = "";
+		$data['err_msg'] = ""; 
+		if($this->input->post('measureid') !="") {
+			//echo "hello";die;
+			$this->session->set_userdata('measuredid',$this->input->post('measureid'));
+		}
+		
+		$data['style_id']= $style_id;
+		//$this->load->view('details.php',$data);
+		redirect($this->config->item('base_url').'cart/mapping/'.$style_id,'refresh',$data);
+	}
+
+	function mvalue()
+	{
+ 		
+		$profilename = $_POST['profilename']; 
+		$type = $_POST['type']; 
+		//echo $profilename;die;
+		if($type == '4') {
+			$data['brandid'] = $this->input->post('brandid');
+			$data['fitid'] = $this->input->post('fitid');
+			$data['sizeid'] = $this->input->post('sizeid');
+			$data['comments'] = $this->input->post('comments');
+  			$this->cart_model->updatebodymeasure_brand($data,$profilename,$type);
+		} else {
+			if($_POST['bodypartid'] != ''){
+			$arary1 = implode(',',$_POST['bodypartid']);
+			}
+			if($_POST['bodypartid'] != ''){
+				$arary2 = implode(',',$_POST['bodypartvalue']);
+			}
+			$arraydata = array('0'=>$arary1, '1'=>$arary2);
+
+			$data = serialize($arraydata);
+			$this->cart_model->updatebodymeasure1($data,$profilename,$type);
+		}
+		//$data1=unserialize($data);
+		//echo "<pre>"; print_r($data1);die;
+		 
+		if($this->session->userdata('saveid') != '') {
+
+			$i = 1;
+				foreach( $this->cart->contents() as $items)  
+				{
+					if( $items['options']['saveid'] == $this->session->userdata('saveid') ){
+						if($items['options']['newmid'] == ""){
+ 						$rowid = $items['rowid'];
+						$id    = $items['id'];
+						$price = $items['price'];
+						$qty   = $items['qty'];
+						$name  = $items['name'];
+
+						$details = $items['options']['details'];
+						$imagename = $items['options']['imagename'];
+						
+						$data = array(
+						   'rowid' => $rowid,
+						   'qty'   => 0
+						);
+ 						$this->cart->update($data); 
+						$data['cartprod'] = array(
+							   'id'      => $id,
+							   'qty'     => $qty,
+							   'price'   => $price, 
+							   'name'    => $name,
+							   'options' => array('details'=>$details , 'imagename'=>$imagename, 'newmid'=>$this->session->userdata('measuredid'), 'is_3d'=> '1', 'saveid' => $this->session->userdata('saveid') ) 
+							);
+				   
+						//print_r($data['cartprod']);die();
+						$this->cart->insert($data); 
+					
+						}
+ 					}
+					$i++;
+				}
+  
+			$this->cart_model->updatecartmesure($this->session->userdata('latestcartId'),$this->session->userdata('measuredid'));
+			redirect($this->config->item('base_url').'cart/viewcart','refresh',$data);
+		} else { 
+			redirect($this->config->item('base_url').'cart/add','refresh',$data);
+
+		}
+	}
+
+	function newmvalue()
+	{
+		 
+		if($_POST['bodypartid'] != ''){
+			$arary1 = implode(',',$_POST['bodypartid']);
+		}
+		if($_POST['bodypartid'] != ''){
+			$arary2 = implode(',',$_POST['bodypartvalue']);
+		}
+		$arraydata = array('0'=>$arary1, '1'=>$arary2);
+
+		$profilename = $_POST['profilename']; 
+		$this->cart_model->newupdatebodymeasure1($data, $profilename);
+		$data1=unserialize($data);
+		//echo "<pre>"; print_r($data1);die;
+		redirect($this->config->item('base_url').'cart/add','refresh',$data);
+	}
+	 	
+	function measure()
+	{
+		if($this->session->userdata('userid') == ''){
+				redirect($this->config->item('base_url'),'refresh');
+		}
+ 		 
+		/*$brandid = $this->input->post('brandid');
+		$sizeid = $this->input->post('sizeid');
+		$fitid = $this->input->post('fitid');
+		$this->cart_model->updatebrand($brandid,$sizeid,$fitid);
+		 */
+			
+
+			/* body mapping saving */
+		$data = array(); 
+		$data['style_id'] =  $style_id;
+		$data['L_strErrorMessage'] = "";
+		$data['err_msg'] = ""; 
+ 		$data['foot']=$this->input->post('foot');
+		$data['inch']=$this->input->post('inch');
+		$data['weight']=$this->input->post('weight');		
+		$data['impheight']=$this->input->post('impheight');
+		$data['impweight']=$this->input->post('impweight');
+		$data['style_id']= $this->session->userdata('style_id');
+		$data['pid'] = $this->session->userdata('prodid');
+		
+		if($this->session->userdata('measuredid') ==""){
+			$this->cart_model->insertbodymeasure($data);
+			$lastinsertid=$this->db->insert_id();
+			$this->session->set_userdata('measuredid',$lastinsertid);
+		} else {
+			$this->cart_model->insertbodymeasure($data);
+		}
+		/* body measure saving */
+		
+		$data = array();
+		 
+		$data['measure']=$this->input->post('measure');	
+		$data['pid']=$this->input->post('product_id');
+		$data['style_id']= $style_id;
+		//echo $this->session->userdata('measuredid');die;
+		$this->cart_model->updatebodymeasure($data);
+		
+		/* shoulder type saving */
+		$data = array();
+		 
+		$data['shouldertype']=$this->input->post('shouldertype');	
+		$data['pid']=$this->input->post('product_id');
+		$data['style_id']= $style_id;
+		$this->cart_model->updateshouldertype($data);
+		/* shoulder angle saving */
+		$data = array();
+		$data['shoulderangle']=$this->input->post('shoulderangle');	
+		$data['pid']=$this->input->post('product_id');
+		$data['style_id']= $style_id;
+		$this->cart_model->updateshoulderangle($data);
+		
+		
+			$data = array();
+			if( isset($_POST['fit']) && count($_POST['fit']) > 0) { 
+				$data['fit'] = $this->input->post('fit');
+				$this->session->set_userdata('fit', $data['fit']); 
+				$data['pid'] = $this->input->post('pid');
+				$data['bid'] = $this->input->post('bid');
+				$this->cart_model->updatefit($data);
+			} else {
+				$data['fit'] = $this->session->userdata('fit');
+			}
+
+
+		$data['subcat'] = $this->session->userdata('subcat'); //$this->home_model->getsubcatid($data['pid']);
+		$data['fit'] = $this->session->userdata('fit'); 
+		$data['proparts'] = $this->home_model->prodparts_hide($data['subcat']);
+
+		//print_r($data); die;
+		$data['title'] = 'Stylior.com';
+		$data['keywords'] = '';
+		$data['description'] = '';
+		
+		
+		
+		$this->load->view('measurement.php',$data);
+	}
+	
+	/*
+	 * function which will save the fit data
+	 * @redirect to the measure page
+	 * @Author MSYS009
+	*/
+	function measureNew()
+	{
+		if($this->session->userdata('userid') == ''){
+				redirect($this->config->item('base_url'),'refresh');
+		}
+ 		 
+		/*$brandid = $this->input->post('brandid');
+		$sizeid = $this->input->post('sizeid');
+		$fitid = $this->input->post('fitid');
+		$this->cart_model->updatebrand($brandid,$sizeid,$fitid);
+		 */
+			$data['style_id'] =  $style_id;
+			$data = array();
+			if( isset($_POST) && count($_POST) > 0) { 
+				$data['fit'] = $this->input->post('fit');
+				$this->session->set_userdata('fit', $data['fit']); 
+				$data['pid'] = $this->input->post('pid');
+				$data['bid'] = $this->input->post('bid');
+				$this->cart_model->updatefit($data);
+			} else {
+				$data['fit'] = $this->session->userdata('fit');
+			}
+
+
+		$data['subcat'] = $this->session->userdata('subcat'); //$this->home_model->getsubcatid($data['pid']);
+		$data['fit'] = $this->session->userdata('fit'); 
+		$data['proparts'] = $this->home_model->prodparts_hide($data['subcat']);
+
+		//print_r($data['proparts']); die;
+		$data['title'] = 'Stylior.com';
+		$data['keywords'] = '';
+		$data['description'] = '';
+		$this->load->view('measurement_new.php',$data);
+	}
+ 
+		function brand($style_id)
+		{
+			if($this->session->userdata('userid') == ''){
+				redirect($this->config->item('base_url'),'refresh');
+			}
+			/*$this->session->unset_userdata('fit'); 
+ 		 
+			$data['style_id'] =  $style_id;
+			$data = array();
+			if( isset($_POST) && count($_POST) > 0) { 
+				$data['fit'] = $this->input->post('fit');
+				$this->session->set_userdata('fit', $data['fit']); 
+				$data['pid'] = $this->input->post('pid');
+				$data['bid'] = $this->input->post('bid');
+				$this->cart_model->updatefit($data);
+			} else {
+				$data['fit'] = $this->session->userdata('fit');
+			}*/
+ 		$data['title'] = 'Stylior.com';
+		$data['keywords'] = '';
+		$data['description'] = '';
+		$data['allbrand'] = $this->home_model->allbrand();
+		
+		$data['allfit'] = $this->home_model->allfit();
+		$data['allsize'] = $this->home_model->allsize();
+		
+		$this->load->view('brand.php',$data);
+	}
+	
+	
+	
+	function bodymeasure($style_id ='')
+	{
+		if($this->session->userdata('userid') == ''){
+				redirect($this->config->item('base_url'),'refresh');
+		}
+ 
+ 		$data = array(); 
+		$data['L_strErrorMessage'] = "";
+		$data['err_msg'] = ""; 
+ 		$data['foot']=$this->input->post('foot');
+		$data['inch']=$this->input->post('inch');
+		$data['weight']=$this->input->post('weight');
+		//echo $data['weight'];die;
+		$data['impheight']=$this->input->post('impheight');
+		$data['impweight']=$this->input->post('impweight');
+		$data['style_id']= $this->session->userdata('style_id');
+		/*$allstyle=$this->cart_model->getproid($style_id);
+		//print_r($allstyle);die;
+		$data['pid']=$allstyle->pid;*/
+		$data['pid'] = $this->session->userdata('prodid');
+		
+		if($this->session->userdata('measuredid') ==""){
+			$this->cart_model->insertbodymeasure($data);
+			$lastinsertid=$this->db->insert_id();
+			$this->session->set_userdata('measuredid',$lastinsertid);
+		} else {
+			$this->cart_model->insertbodymeasure($data);
+		}
+
+		$data['title'] = 'Stylior.com';
+		$data['keywords'] = '';
+		$data['description'] = '';
+
+		$this->load->view('body_character.php',$data);
+	}
+	
+	function shouldertype($style_id)
+	{
+		if($this->session->userdata('userid') == ''){
+				redirect($this->config->item('base_url'),'refresh');
+		}
+
+		$data = array();
+		 
+		$data['measure']=$this->input->post('measure');	
+		$data['pid']=$this->input->post('product_id');
+		$data['style_id']= $style_id;
+		//echo $this->session->userdata('measuredid');die;
+		$this->cart_model->updatebodymeasure($data);
+		/*$subcatid = $this->home_model->getsubcatid($data['pid']); 
+		$data['proparts'] = $this->home_model->prodparts($subcatid);
+		$data['subcat']=$subcatid ;*/
+		//print_r($data['proparts']);die;
+		$data['title'] = 'Stylior.com';
+			$data['keywords'] = '';
+			$data['description'] = '';
+		$this->load->view('shouldertype.php',$data);
+	}
+
+	function shoulderangle($style_id)
+	{
+		if($this->session->userdata('userid') == ''){
+				redirect($this->config->item('base_url'),'refresh');
+		}
+	
+	    $data = array();
+		 
+		$data['shouldertype']=$this->input->post('shouldertype');	
+		$data['pid']=$this->input->post('product_id');
+		$data['style_id']= $style_id;
+		$this->cart_model->updateshouldertype($data);
+		/*$subcatid = $this->home_model->getsubcatid($data['pid']); 
+		//$data['proparts'] = $this->home_model->prodparts($subcatid);
+		$data['subcat']=$subcatid ;*/
+		//print_r($data['proparts']);die;
+		$data['title'] = 'Stylior.com';
+			$data['keywords'] = '';
+			$data['description'] = '';
+		$this->load->view('shoulderangle.php',$data);
+	}
+
+	function fit($style_id)
+	{
+		$this->session->unset_userdata('subcat');
+        if($this->session->userdata('userid') == ''){
+				redirect($this->config->item('base_url'),'refresh');
+		}
+
+		$data = array();
+		$data['shoulderangle']=$this->input->post('shoulderangle');	
+		$data['pid']=$this->input->post('product_id');
+		$data['style_id']= $style_id;
+		$this->cart_model->updateshoulderangle($data);
+		//echo $data['pid'];die;
+		/*if($this->session->userdata('saveid') == ''){
+			$subcatid = $this->home_model->getsubcatid($data['pid']); 
+		} else {
+			$subcatid = '10';
+		}*/
+		$subcatid = '10';
+		$subcatid1 = $this->session->set_userdata('subcat',$subcatid);
+		$data['proparts'] = $this->home_model->prodparts($subcatid1);
+		$data['subcat']=$subcatid1 ;
+		//print_r($data['proparts']);die;
+		$data['title'] = 'Stylior.com';
+			$data['keywords'] = '';
+			$data['description'] = '';
+		$this->load->view('fit.php',$data);
+	}
+	/*
+	* function which will save the cart mapping detatils
+	* @Author MSYS009
+	*/
+	function fitNew($style_id)
+	{
+		$this->session->unset_userdata('subcat');
+        if($this->session->userdata('userid') == ''){
+				redirect($this->config->item('base_url'),'refresh');
+		}
+		/* body mapping saving */
+		$data = array(); 
+		$data['L_strErrorMessage'] = "";
+		$data['err_msg'] = ""; 
+ 		$data['foot']=$this->input->post('foot');
+		$data['inch']=$this->input->post('inch');
+		$data['weight']=$this->input->post('weight');		
+		$data['impheight']=$this->input->post('impheight');
+		$data['impweight']=$this->input->post('impweight');
+		$data['style_id']= $this->session->userdata('style_id');
+		$data['pid'] = $this->session->userdata('prodid');
+		
+		if($this->session->userdata('measuredid') ==""){
+			$this->cart_model->insertbodymeasure($data);
+			$lastinsertid=$this->db->insert_id();
+			$this->session->set_userdata('measuredid',$lastinsertid);
+		} else {
+			$this->cart_model->insertbodymeasure($data);
+		}
+		/* body measure saving */
+		
+		$data = array();
+		 
+		$data['measure']=$this->input->post('measure');	
+		$data['pid']=$this->input->post('product_id');
+		$data['style_id']= $style_id;
+		//echo $this->session->userdata('measuredid');die;
+		$this->cart_model->updatebodymeasure($data);
+		
+		/* shoulder type saving */
+		$data = array();
+		 
+		$data['shouldertype']=$this->input->post('shouldertype');	
+		$data['pid']=$this->input->post('product_id');
+		$data['style_id']= $style_id;
+		$this->cart_model->updateshouldertype($data);
+		/* shoulder angle saving */
+		$data = array();
+		$data['shoulderangle']=$this->input->post('shoulderangle');	
+		$data['pid']=$this->input->post('product_id');
+		$data['style_id']= $style_id;
+		$this->cart_model->updateshoulderangle($data);
+		//echo $data['pid'];die;
+		/*if($this->session->userdata('saveid') == ''){
+			$subcatid = $this->home_model->getsubcatid($data['pid']); 
+		} else {
+			$subcatid = '10';
+		}*/
+		$subcatid = '10';
+		$subcatid1 = $this->session->set_userdata('subcat',$subcatid);
+		$data['proparts'] = $this->home_model->prodparts($subcatid1);
+		$data['subcat']=$subcatid1 ;
+		//print_r($data['proparts']);die;
+		$data['title'] = 'Stylior.com';
+			$data['keywords'] = '';
+			$data['description'] = '';
+		$this->load->view('fit_new.php',$data);
+	}
+ 
+	function add()
+	{
+		$this->load->library();
+		$this->load->library('session');
+		if ($this->session->userdata('measuredid') == ""){
+			if($this->input->post('measureid') !=""){
+				$this->session->set_userdata('measuredid',$this->input->post('measureid'));
+			}
+		}
+		//echo $this->session->userdata('measuredid');die;
+		$goontheway = '0';
+		foreach( $this->cart->contents() as $items)  
+		{
+			 if( $items['options']['newmid'] == $this->session->userdata('measuredid') ){
+					$goontheway = '1';
+			 }
+		}
+		if($goontheway == '0'){
+			redirect($this->config->item('base_url').'account/measure','refresh',$data);
+		}
+
+		$data['err_msg'] = '';
+		$data['sizeid']=$this->input->post('sizeid');
+		$this->session->set_userdata('sizeid',$data['sizeid']);
+		/* new cart */
+		$font = $this->session->userdata('cfonttype');
+		$color = $this->session->userdata('ccolour');
+		$placement = $this->session->userdata('cplacement');
+		$monovalue = $this->session->userdata('cmonovalue');
+		//echo $monovalue;die;
+		$monotext = $this->session->userdata('cmonotext');
+		
+		if($this->session->userdata('updatemeasuredid') != '1') {
+		$details = $this->cart_model->productdetails($this->session->userdata('cstyleid'));
+		//echo $details->style_id;die;
+		$stylename = $this->home_model->getstylename($details->style_id);
+	    $productinfo = $this->home_model->productinfo($this->session->userdata('prodid'));
+ 
+		$price = $details->sellingprice;
+		$data['cartprod'] = array(
+			   'id'      => $details->id,
+ 			   'qty'     => $this->session->userdata('cqty'),
+			   'price'   => $price, 
+			   'name'    => $productinfo->pname.":".$stylename,
+			   'options' => array('fonts'=>$font , 'color'=>$color, 'newmid'=>$this->session->userdata('measureid'), 'prodid'=>$this->session->userdata('prodid'), 'placement'=>$placement, 'monovalue'=>$monovalue, 'monotext'=>$monotext, 'is_3d'=> '0') 
+ 	        );
+   
+		//print_r($data['cartprod']);die();
+ 		$this->cart->insert($data); 
+		$this->cart_model->insertcartindb($data['cartprod']);
+		}
+		/* new cart end */
+ 		redirect($this->config->item('base_url').'cart/viewcart','refresh',$data);
+ 	}
+
+	function add_direct()
+	{
+		$this->load->library();
+		$this->load->library('session');
+		if ($this->session->userdata('measuredid') == ""){
+			if($this->input->post('measureid') !=""){
+				$this->session->set_userdata('measuredid',$this->input->post('measureid'));
+			}
+		}
+	
+		$data['err_msg'] = '';
+		$data['sizeid']=$this->input->post('sizeid');
+		$this->session->set_userdata('sizeid',$data['sizeid']);
+		/* new cart */
+		$font = $this->session->userdata('cfonttype');
+		$color = $this->session->userdata('ccolour');
+		$placement = $this->session->userdata('cplacement');
+		$monovalue = $this->session->userdata('cmonovalue');
+		//echo $monovalue;die;
+		$monotext = $this->session->userdata('cmonotext');
+		
+ 		$details = $this->cart_model->productdetails($this->session->userdata('cstyleid'));
+		//echo $details->style_id;die;
+		$stylename = $this->home_model->getstylename($details->style_id);
+	    $productinfo = $this->home_model->productinfo($this->session->userdata('prodid'));
+ 
+		$price = $details->sellingprice;
+		$data['cartprod'] = array(
+			   'id'      => $details->id,
+ 			   'qty'     => $this->session->userdata('cqty'),
+			   'price'   => $price, 
+			   'name'    => $productinfo->pname.":".$stylename,
+			   'options' => array('fonts'=>$font , 'color'=>$color, 'newmid'=>$this->session->userdata('measuredid'), 'prodid'=>$this->session->userdata('prodid'), 'placement'=>$placement, 'monovalue'=>$monovalue, 'monotext'=>$monotext, 'is_3d'=> '0') 
+ 	        );
+   
+		//print_r($data['cartprod']);die();
+ 		$this->cart->insert($data); 
+		$this->cart_model->insertcartindb($data['cartprod']);
+	 
+		/* new cart end */
+ 		redirect($this->config->item('base_url').'cart/viewcart','refresh',$data);
+ 	}
+
+	function saveadd3d(){
+		
+			$this->cart_model->updatecartmesure($this->session->userdata('latestcartId'),$this->input->post('measureid'));
+
+ 				$i = 1;
+				foreach( $this->cart->contents() as $items)  
+				{
+					if( $items['options']['saveid'] == $this->session->userdata('saveid') ){
+						 
+ 						$rowid = $items['rowid'];
+						$id    = $items['id'];
+						$price = $items['price'];
+						$qty   = $items['qty'];
+						$name  = $items['name'];
+
+						$details = $items['options']['details'];
+						$imagename = $items['options']['imagename'];
+						
+						$data = array(
+						   'rowid' => $rowid,
+						   'qty'   => 0
+						);
+
+						$this->cart->update($data); 
+						$data['cartprod'] = array(
+							   'id'      => $id,
+							   'qty'     => $qty,
+							   'price'   => $price, 
+							   'name'    => $name,
+							   'options' => array('details'=>$details , 'imagename'=>$imagename, 'newmid'=>$this->input->post('measureid'), 'is_3d'=> '1', 'saveid' => $this->session->userdata('saveid') ) 
+							);
+				   
+						//print_r($data['cartprod']);die();
+						$this->cart->insert($data); 
+
+ 					}
+					$i++;
+				}
+		 
+ 		$this->session->unset_userdata('saveid');
+ 		$this->session->unset_userdata('measuredid');
+		redirect($this->config->item('base_url').'cart/viewcart','refresh',$data);
+	}
+	/*
+	function viewcart()
+ 	{
+		$this->session->unset_userdata('measuredid');
+		if($this->session->userdata('userid')==""){
+			redirect($this->config->item('base_url').'sign-in');
+		}
+
+ 		$data = array();
+ 		$data['err_msg'] = '';
+			$data['title'] = 'Stylior.com';
+			$data['keywords'] = '';
+			$data['description'] = '';
+			//echo "<pre>";
+			//print_r($data);exit;
+ 		$this->load->view('viewcart',$data);
+ 	}
+	*/
+	function viewcart()
+ 	{
+		$this->session->unset_userdata('measuredid');
+		if($this->session->userdata('userid')==""){
+			redirect($this->config->item('base_url').'sign-in');
+		}
+
+ 		$data = array();
+ 		$data['err_msg'] = '';
+			$data['title'] = 'Stylior.com';
+			$data['keywords'] = '';
+			$data['description'] = '';
+			//echo "<pre>";
+			//print_r($data);exit;
+ 		$this->load->view('viewcartnew',$data);
+ 	}
+	
+ 
+ 	function addtocart_view($pid,$attrid,$qty)
+ 	{	
+ 		$details=$this->cart_model->productdetails($pid,$attrid);
+ 		$data['cartprod'] = array(
+ 			   'id'      => $details->product_id,
+ 			   'qty'     => $qty,
+ 			   'price'   => $details->attr_value,
+ 			   'name'    => $details->title,
+ 			   'options' => array('attrid' => $attrid)
+ 		);
+ 		$this->cart->insert($data);
+ 		$this->load->view('viewcartonly');
+ 	}
+ 
+ 	function viewcartonly(){
+ 		$data['err_msg'] = '';
+ 		$this->load->view('viewcartonly',$data);
+ 	}
+
+  	function updateproduct()
+ 	{
+ 		//print_r($_POST);die;
+ 		$this->cart->update($_POST); 
+ 		/*if(isset($_POST['remove']))
+ 		{
+ 			foreach($_POST['remove'] as $remove)
+ 			{
+ 				$data = array('rowid'=>$remove,
+ 							  'qty' => 0);
+ 				$this->cart->update($data); 
+ 			}
+
+		}*/
+ 		redirect($this->config->item('base_url').'cart/viewcart');
+  	}
+
+	function removeproduct($remove, $pid)
+ 	{
+		$remove = explode(',',$remove);
+		for($i=0;$i < count($remove);$i++)
+		{
+			$data = array('rowid'=>$remove[$i],'qty' => 0);
+			$this->cart->update($data); 
+			$this->cart_model->removeproductcart($pid);
+ 		}
+		redirect($this->config->item('base_url').'cart/viewcart');
+ 	}
+
+
+	function showdata()
+	{
+		$sizeid = $_POST['sizeid'];
+		$fit = $_POST['fit'];
+		//echo 	$sizeid; die;
+		$sizename = $this->cart_model->sizename($sizeid);
+		$data = $this->home_model->prodparts($sizeid);
+ 		if($fit == "1") { $fittype = "Regular"; }
+		if($fit == "2") { $fittype = "Tailored"; }
+		if($fit == "3") { $fittype = "Slim"; }	
+        
+			   $html ="<table width='55%' border='1'>
+				 <tr>
+                        <td style='font-size:20px;' width='35%' height='50' align='center' valign='middle' bgcolor='#1ab7ea'>
+						<span style='color:#fff; font-size:20px;'><strong>Body Parts ( ".$fittype." )</strong></span></td>
+						<td style='font-size:20px;' width='20%' height='50' align='center' valign='middle' bgcolor='#1ab7ea'>
+						<span style='color:#fff;'><strong>".$sizename."</strong></span></td>
+						<input type='hidden' value='".count($data)."' id='measurecount'/>
+                    </tr>";
+					
+					   if($data != '' && count($data) >0)
+					   { $j=0;
+								for($i=0;$i<count($data);$i++)
+					   { $j++;
+					  
+							if($this->session->userdata('defaultmeasurement') == '0') { $ptvalue = $data[$i]->partvalue;  } else { $ptvalue = ($data[$i]->partvalue * 2.54); }
+
+						   $html.="<tr>";
+						   $html.="<td style='font-size:20px;' width='35%' height='50' align='left' valign='middle'>".$this->cart_model->getpartname($data[$i]->partid)."</td>";
+						   $html .= "<td style='font-weight:20px;'   align='center' valign='middle'>";
+
+						   $html .= "<input style='width:auto;' name='bodypartvalue[]' onkeypress='return numbersonly(event)' type='text' id='no_".$j."' value ='".$ptvalue."'  size='20' style='text-align:center;'>";
+
+						   $html .= "<input name='bodypartid[]' type='hidden' type='text' id='no_".$j."' value ='".$data[$i]->partid."' size='20' style='text-align:center;'>";
+						
+							if($this->session->userdata('defaultmeasurement') == '1') { $cms ='Cms'; } else { $cms ='In'; } 						$html .= '<span class="textinch">'.$cms.'</span>';
+
+						   $html .="</td>";
+						   $html .="</tr>";
+					 
+					  }}   
+					 	$html .='<tr style="">
+                        <td style="font-size:20px;" width="35%" height="50" align="center" valign="middle">Profile Name</td>
+                        <td style="font-weight:20px;"   align="center" valign="middle">
+							<input type="text" value="" name="profilename" id="profilename" /> 
+                        </td>
+                    </tr>';
+					
+                   $html.="<tr>
+                        <td style='font-size:20px;' height='40' colspan='2' align='center' valign='middle'>
+                          <div class='form-actions'>
+                            <button type='submit' class='btn btn-primary btn-send-message-2' style='margin:5px; 0px 0px 5px;' onclick ='return formsubmitcart();'>Submit</button>	
+							
+			                </div>
+						</td>
+                    </tr>";
+									
+                   $html.="</table>    
+							<br>
+							<br>";  
+							echo $html;
+				
+                
+	}
+
+	
+	
+ 
+	 
+
+ 	function updateshippingval(){
+ 		$this->session->set_userdata('states',$_POST['states']);
+ 		if($_POST['states'] == '0'){
+ 			$this->session->set_userdata('cities',$_POST['cities']);
+ 		} else {
+ 			$this->session->set_userdata('cities','');
+ 		}
+ 		$this->session->set_userdata('couriers',$_POST['couriers']);
+
+		redirect($this->config->item('base_url').'cart/viewcart');
+ 	}
+ 	
+	
+	function couponcheck(){
+			
+			$coupan = $this->input->post("coupon"); 
+			//echo $coupan;
+			$select_coupan = $this->cart_model->selectcoupan($coupan);
+			$coupanname = $select_coupan->coupanname;
+			$no_of_coupan = $select_coupan->no_of_coupan;//done
+			$coupan_per_user = $select_coupan->coupan_per_user;//done
+			$mini_amountt = $select_coupan->mini_amount;		//done		
+			$usedcoupanvalue = $this->cart_model->coupen_check($coupanname);//no of rows
+			$noofcoupon =  $no_of_coupan - $usedcoupanvalue;// no of coupon
+			$noofusedperuser = $this->cart_model->user_coupen_check($coupanname);//no of rows
+			$noofcoupancheck = $coupan_per_user - $noofusedperuser;//per user
+			//$newtotal = $mini_amountt - $this->session->userdata('total_amount');
+			//if($select_coupan != '' && $noofcoupon>0 && $noofcoupancheck>0 && $newtotal>0) {
+
+			if($select_coupan != '' && $no_of_coupan  == 0){
+				$couponprice = $select_coupan->discount;
+				$coupanvalue = $select_coupan->coupanvalue;
+				$coupanname = $select_coupan->coupanname;
+				//echo   $couponprice.$coupanname;die();
+				$this->session->set_userdata('couponprice',$couponprice); 
+				$this->session->set_userdata('couponcode',$coupanvalue);
+				$this->session->set_userdata('coupanname',$coupanname);
+			} else if($select_coupan != '' && $noofcoupon > 0 && $noofcoupancheck>0) {
+				$couponprice = $select_coupan->discount;
+				$coupanvalue = $select_coupan->coupanvalue;
+				$coupanname = $select_coupan->coupanname;
+				//echo   $couponprice.$coupanname;die();
+				$this->session->set_userdata('couponprice',$couponprice); 
+				$this->session->set_userdata('couponcode',$coupanvalue);
+				$this->session->set_userdata('coupanname',$coupanname);
+			} else {
+				echo "0";
+			}
+			
+		}
+			
+		function removecheck(){
+			 $this->session->unset_userdata('couponprice'); 
+			 $this->session->unset_userdata('couponcode'); 
+			 echo "0";
+		}
+	
+		function giftwrap(){
+			 $giftval = $this->input->post("giftval");
+			 if($giftval == '1'){
+				 $this->session->set_userdata('giftwrap','1'); 
+			 } else {
+				$this->session->unset_userdata('giftwrap'); 
+			 }
+		}	
+		
+		 function vouchercheck(){
+						$voucher = $this->input->post("voucher"); 
+						//echo $voucher;die;
+						//$checkvoucher_order = $this->cart_model->checkvoucher_order($voucher);
+						$select_voucher = $this->cart_model->selectvoucher($voucher);
+						//echo $select_voucher;die;
+						$value = $select_voucher->value;
+						$vname = $select_voucher->code;
+						
+						$usedvoucher = $this->cart_model->user_voucher_check($vname,$value);//check giftvoucher code,price rows in oreder table
+						//print_r($select_voucher);
+						//print_r($usedvoucher);
+						if($select_voucher != '') {
+							if($usedvoucher != '' && !empty($usedvoucher)) {//free/paid giftvoucher Second time uses
+								if($usedvoucher->vouchervalue == "paid"){//paid
+									//$voucherdisc_first = $usedvoucher->voucherdisc;
+									if(($select_voucher->price) > ($usedvoucher->voucherdisc)){
+										$voucherprice = ($select_voucher->price)-($usedvoucher->voucherdisc);
+										$vouchercode = $usedvoucher->vouchercode;
+										$vouchervalue = $usedvoucher->vouchervalue;
+										
+										$this->session->set_userdata('voucherprice',$voucherprice); 
+										$this->session->set_userdata('vouchercode',$vouchercode); 
+										$this->session->set_userdata('vouchervalue',$vouchervalue); 
+									}else{ // paid voucher no balance
+										echo "1";
+									}
+								}
+								if($usedvoucher->vouchervalue == "free"){//free
+									echo "1";
+								}								
+							}else{//free/paid giftvoucher first time uses
+								$voucherprice = $select_voucher->price;
+								$vouchercode = $select_voucher->code;
+								$vouchervalue = $select_voucher->value;
+								
+								$this->session->set_userdata('voucherprice',$voucherprice); 
+								$this->session->set_userdata('vouchercode',$vouchercode); 
+								$this->session->set_userdata('vouchervalue',$vouchervalue); 
+							}
+						} else {
+							echo "0";
+						}
+						
+					}
+		/*
+		 * action which will check the discount code
+		 * return the valid code or not
+		 * @Author MSYS009
+		 */			
+		 function voucherchecknew(){
+						$voucher = $this->input->post("voucher"); 
+						//echo $voucher;die;
+						//$checkvoucher_order = $this->cart_model->checkvoucher_order($voucher);
+						$select_voucher = $this->cart_model->selectvoucher($voucher);
+						//print_r($select_voucher);die;  
+						$value = $select_voucher->value;
+						$vname = $select_voucher->code;
+						
+						$usedvoucher = $this->cart_model->user_voucher_check($vname,$value);//check giftvoucher code,price rows in oreder table
+						//print_r($select_voucher);
+						//print_r($usedvoucher);
+						if($select_voucher != '') {
+							if($usedvoucher != '' && !empty($usedvoucher)) {//free/paid giftvoucher Second time uses
+								if($usedvoucher->vouchervalue == "paid"){//paid
+									//$voucherdisc_first = $usedvoucher->voucherdisc;
+									if(($select_voucher->price) > ($usedvoucher->voucherdisc)){
+										$voucherprice = ($select_voucher->price)-($usedvoucher->voucherdisc);
+										$vouchercode = $usedvoucher->vouchercode;
+										$vouchervalue = $usedvoucher->vouchervalue;
+										
+										$this->session->set_userdata('voucherprice',$voucherprice); 
+										$this->session->set_userdata('vouchercode',$vouchercode); 
+										$this->session->set_userdata('vouchervalue',$vouchervalue); 
+									}else{ // paid voucher no balance
+										echo "1";
+									}
+								}
+								if($usedvoucher->vouchervalue == "free"){//free
+									echo "1";
+								}								
+							}else{//free/paid giftvoucher first time uses
+								$voucherprice = $select_voucher->price;
+								$vouchercode = $select_voucher->code;
+								$vouchervalue = $select_voucher->value;
+								
+								$this->session->set_userdata('voucherprice',$voucherprice); 
+								$this->session->set_userdata('vouchercode',$vouchercode); 
+								$this->session->set_userdata('vouchervalue',$vouchervalue); 
+							}
+						} else {
+							//echo "0";
+							$coupan = $this->input->post("voucher"); 
+							//echo $coupan;
+							$select_coupan = $this->cart_model->selectcoupan($coupan);
+							
+							//print_r($select_coupan);exit;
+							$coupanname = $select_coupan->coupanname;
+							$no_of_coupan = $select_coupan->no_of_coupan;//done
+							$coupan_per_user = $select_coupan->coupan_per_user;//done
+							$mini_amountt = $select_coupan->mini_amount;		//done		
+							$usedcoupanvalue = $this->cart_model->coupen_check($coupanname);//no of rows
+							$noofcoupon =  $no_of_coupan - $usedcoupanvalue;// no of coupon
+							$noofusedperuser = $this->cart_model->user_coupen_check($coupanname);//no of rows
+							$noofcoupancheck = $coupan_per_user - $noofusedperuser;//per user
+							//$newtotal = $mini_amountt - $this->session->userdata('total_amount');
+							//if($select_coupan != '' && $noofcoupon>0 && $noofcoupancheck>0 && $newtotal>0) {
+
+							if($select_coupan != '' && $no_of_coupan  == 0){
+								$couponprice = $select_coupan->discount;
+								$coupanvalue = $select_coupan->coupanvalue;
+								$coupanname = $select_coupan->coupanname;
+								//echo   $couponprice.$coupanname;die();
+								$this->session->set_userdata('couponprice',$couponprice); 
+								$this->session->set_userdata('couponcode',$coupanvalue);
+								$this->session->set_userdata('coupanname',$coupanname);
+							} else if($select_coupan != '' && $noofcoupon > 0 && $noofcoupancheck>0) {
+								$couponprice = $select_coupan->discount;
+								$coupanvalue = $select_coupan->coupanvalue;
+								$coupanname = $select_coupan->coupanname;
+								//echo   $couponprice.$coupanname;die();
+								$this->session->set_userdata('couponprice',$couponprice); 
+								$this->session->set_userdata('couponcode',$coupanvalue);
+								$this->session->set_userdata('coupanname',$coupanname);
+							} else {
+								echo "0";
+							}
+						}
+						
+		}
+		
+		function removecheckvoucher(){
+			 $this->session->unset_userdata('voucherprice'); 
+			 $this->session->unset_userdata('vouchercode'); 
+			 $this->session->unset_userdata('vouchervalue'); 
+			 echo "0";
+		}
+		
+		 function mywallet(){
+						$walletamount = $this->cart_model->getwalletamount();
+						$this->session->set_userdata('mywalletdata',$walletamount); 
+					}
+			function removewallet(){
+			 $this->session->unset_userdata('mywalletdata'); 
+			 
+			 echo "0";
+		}
+		function show_fit()
+		{
+			$bid = $_POST['bid'];
+			$data = $this->cart_model->show_fit($bid);
+			//print_r($data);exit;
+			$html = "<select id='fitid'  class='validate[required] select-box' data-prompt-position='topRight:5' name='fitid' onchange='get_size(this.value)'>";
+			$html .= "<option value=''>Select Fit</option>";
+			if($data != ''){
+			for($i=0;$i<count($data);$i++)
+			{
+				$html .= "<option value='".$data[$i]->id ."'>".$data[$i]->fitname ."</option>";
+			}
+			}
+			$html .="</select>";
+			echo $html;
+		}
+		
+		function show_size()
+		{
+			$fitid = $_POST['fitid'];
+			$data = $this->cart_model->show_size($fitid);
+			//print_r($data);exit;
+			$html = "<select id='sizeid' class='validate[required] select-box' data-prompt-position='topRight:5' name='sizeid' >";
+			$html .= "<option value=''>Select Size</option>";
+			if($data != ''){
+			for($i=0;$i<count($data);$i++)
+			{
+				$html .= "<option value='".$data[$i]->id."'>".$data[$i]->size."</option>";
+			}
+			}
+			$html .="</select>";
+			echo $html;
+		}
+		/*
+		 * action which will render the view page
+		 * contains the list of products with image
+		 * @Author MSYS009
+		 */
+		function listProducts()
+		{
+			
+			$listData = $this->hmlistpage_model->getData();
+			//echo "<pre>";
+			//print_r($listData);exit;
+			$data = array(); 
+			$data['L_strErrorMessage'] = "";
+			$data['err_msg'] = ""; 			
+			$data['productListData']=$listData;
+			$this->load->view('list_products_view.php',$data);
+		}
+		
+		function saveSelectionData()
+		{
+			//ini_set('display_errors',1);
+			//error_reporting(E_ERROR);
+			$selectedInfo['data']      = $_POST['imagedata'];
+			$timeimage = time();
+			$selectedInfo['details']   = $_POST['details'];
+			$selectedInfo['price']     = $_POST['price'];
+			$selectedInfo['productid'] = $_POST['productid'];
+			$selectedInfo['pname']     = $_POST['pname'];
+			$selectedInfo['subcatid']  = $_POST['subcatid'];
+			$_SESSION['selected3dInfo']= $selectedInfo;
+			return true;
+		}
+		
+		function selectionSaveData()
+		{
+			//ini_set('display_errors',1);
+			//error_reporting(E_ERROR);
+			$selectedInfo['data']      = $_POST['imagedata'];
+			$timeimage = time();
+			$selectedInfo['details']   = $_POST['details'];
+			$selectedInfo['price']     = $_POST['price'];
+			$selectedInfo['productid'] = $_POST['productid'];
+			$selectedInfo['pname']     = $_POST['pname'];
+			$selectedInfo['subcatid']  = $_POST['subcatid'];
+			$_SESSION['save3dInfo']= $selectedInfo;
+			return true;
+		}
+					 
+					
+	}
+?>

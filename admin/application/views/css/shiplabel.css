@@ -1,0 +1,44 @@
+body {font-size: 14px; margin:0; padding:0; color:#3c3c3c; line-height:normal; background-color:#fff; font-family:Arial, Helvetica, sans-serif;}
+.input {line-height: normal; margin: 0; padding: 0;}
+.clear {clear: both;}
+.left {float: left;}
+.right {float: right;}
+h1, h2, h3, h4, h5, h6, p, ul, li{margin:0px; padding:0px;}
+a { outline:none; color:#00a652; text-decoration:none;}
+a:hover { outline:none; color:#000; text-decoration:none;}
+img {border:none;}
+p{font}
+ul, ul li{list-style: none;}
+main{width:800px; margin: 0 auto; margin-bottom:50px; border:solid 2px #000; min-height:500px; margin-top:50px; padding:20px;}
+.toppartmain{width:100%; margin:0 0 20px 0px; display:inline-block;}
+
+.toppartmain-left{float:left; width:350px;}
+.toppartmain-left h1{font-size:20px; font-weight:normal;}
+.toppartmain-left h1 b{font-size:20px; font-weight:bold; float:left;}
+.toppartmain-left h1 p{font-size:15px; font-weight:normal; float:left; margin:6px 0 0 6px;}
+
+.logoparts{margin:0px; padding:0px; float:left; width:100%;}
+.logoparts img{margin:15px 0 0 0; padding:0px;}
+
+.logoparts p{margin:22px 0 0 20px; padding:0px; font-size:15px; line-height:22px;}
+
+.logoparts h2{margin:22px 0 0 20px; padding:0px; font-size:18px;}
+
+.topright-partmain{float:right; width:400px;}
+.blankbox{border:solid 1px #000; height:150px; margin:0 0 55px 0px;}
+
+.topright-partmain h3{font-size:18px;}
+.topright-partmain p{font-size:15px; line-height:22px;}
+
+table {border: 1px solid #000; border-collapse: collapse; border-spacing: 0; width:100%;}
+td {border: 1px solid #000; padding: 4px 6px; collapse; border-spacing: 0;}
+
+th {border: 1px solid #000; padding: 4px 6px;}
+
+.lastparts{margin:40px 0 0 0px; padding:0px; width:100%; float:left;}
+
+.lastparts b {
+    float: left;
+    text-align: center;
+    width: 100%;
+}

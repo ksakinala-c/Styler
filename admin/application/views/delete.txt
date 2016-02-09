@@ -1,0 +1,41 @@
+
+model
+function deleteImage($id,$path) {
+
+$this->db->delete('table', array('id' => $id));
+
+    if($this->db->affected_rows() >= 1){
+        if(unlink($path))
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+
+}
+
+
+
+View:
+
+    <?php if(is_array($get_images)): ?>
+
+            <?php foreach($get_images as $image): ?>
+            <img src ="<?=base_url()?>includes/uploads/gallery/thumbs/<?=$image->thumbpath?>" alt="<?= $image->description?>"> <a href="deleteimage/delete/<?=$image->id?>">Delete</a>
+            <?php endforeach; ?>
+    <?php endif; ?>
+	
+Controller:
+
+   function index() { 
+    if(!$this->session->userdata('logged_in')) { 
+        redirect('admin/home'); 
+    } 
+    // Main Page Data 
+    $page['get_images'] = $this->image_model->getImages();
+    $data['cms_pages'] = $this->navigation_model->getCMSPages();
+    $data['title'] = 'Delete Gallery Image'; 
+    $data['content'] = $this->load->view('admin/deleteimage',$page,TRUE); 
+
+    $this->load->view('admintemplate', $data);
+
+}

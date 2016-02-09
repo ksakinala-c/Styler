@@ -1,0 +1,1 @@
+var app,myBus=_.extend({},Backbone.Events);$(function(){"use strict";var e=new Accessories(jsonData.accessories,{parse:!0});delete jsonData.accessories;var a=new Card({availableAccessories:e});app=new AppView({card:a,availableAccessories:e}),app.render()});

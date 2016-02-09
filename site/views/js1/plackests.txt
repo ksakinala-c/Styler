@@ -1,0 +1,23 @@
+if(shirtjson.view=="front")
+	{
+		
+	 if(shirtjson.splacket=="noshirtplacket")
+	{ 
+     var img101 = document.getElementById("shirt_base");
+	}
+	else if(shirtjson.splacket=="shirtplacket")
+	{
+		 var img101 = document.getElementById("base_placket");
+	}
+	else if(shirtjson.splacket=="shirtplacket1")
+	{
+		 var img101 = document.getElementById("base_placket1");
+	}
+	else if(shirtjson.splacket=="shirtplacket2")
+	{
+		 var img101 = document.getElementById("base_placket2");
+	}
+	else if(shirtjson.splacket=="shirtplacket3")
+	{
+		 var img101 = document.getElementById("base_placket3");
+	}

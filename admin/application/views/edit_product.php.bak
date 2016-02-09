@@ -1,0 +1,291 @@
+<?php // print_r($featured_product);break;
+include('include/header.php');?>	
+<script src="<?php echo $front_base_url; ?>admin/ckeditor/ckeditor.js"></script>
+<script>
+	function validate()
+	{
+		var categoryid = $("#categoryid").val();
+		if(categoryid == '')	
+			{		
+		alert('Please Select Category.');		
+		return false;
+		}	
+		$subcatids=document.getElementById('subcatid').options[0].selected;	
+		if($subcatids==true){	
+		alert('Please Select  At least One Sub Category.');		
+		return false;		
+		}
+		var pname = $("#pname").val();
+		if(pname == '')
+		{
+			alert('Please Enter Product Name.');
+			return false;
+		}
+		$colour=document.getElementById('colour').options[0].selected;
+		if($colour==true){
+			alert('Please Select At least One Colour.');
+			return false; 
+		}
+		
+		$size=document.getElementById('size').options[0].selected;
+		if($size==true){
+			alert('Please Select At least One Size.');
+			return false; 
+		}
+		
+		var itemcode = $("#itemcode").val();
+		if(itemcode == '')
+		{
+			alert('Please Enter itemcode.');
+			return false;
+		}
+		var shortcode = $("#shortcode").val();
+		if(shortcode == '')
+		{
+			alert('Please Enter shortcode.');
+			return false;
+		}
+		var price = $("#price").val();
+		if(price == '')
+		{
+			alert('Please Enter price.');
+			return false;
+		} 
+		
+		var em = document.getElementById('price');
+			var filter = /^[0-9]+$/;
+			if (!filter.test(em.value)) {
+			   alert('Enter Numeric Value in Price');
+			   em.focus;
+			   return false;
+			  }
+		
+		var discount = $("#discount").val();
+		if(discount == '')
+		{
+			alert('Please Enter discount.');
+			return false;
+		}
+		 var em = document.getElementById('discount');
+			  var filter = /^[0-9]+$/;
+			  if (!filter.test(em.value)) {
+			   alert('Enter Numeric Value in Discount');
+			   em.focus;
+			   return false;
+			  }
+			  
+		
+		
+		$('#form').submit();
+	}
+	function selectsubcat(id)
+			{
+		//alert(id);
+		  var url = '<?php echo $base_url ?>/product/getsubsubcat/';
+				$.ajax({
+				url:url,
+				type:'post',
+				data:'id='+id,
+				success:function(msg)
+				{
+					document.getElementById('prod2').innerHTML = msg ;  
+				}
+			});
+	}
+	
+</script>
+ 
+ <link rel="stylesheet" href="<?php base_url(); ?>style/format.css">
+<div class="main-content">
+<div class="row">
+<div class="col-xs-12 col-sm-12">
+  <ol class="breadcrumb bc-3">
+		<li><a href="<?php echo $base_url;?>home"><i class="entypo-arrow"></i>Home</a></li>
+		<li class="active"><strong>Edit Product</strong></li>
+  </ol>
+  </div>
+  </div>
+  <?php if($L_strErrorMessage) { ?><div class="warning"><?php echo $L_strErrorMessage; ?></div> <?php } ?>
+
+  <div class="row">
+ 	<div class="col-md-12">
+	
+ 		<div class="panel panel-primary" data-collapsed="0">
+ 			<div class="panel-heading fill">
+				<div class="panel-title">
+                <div class="col-6 col-sm-4 col-lg-9">
+					 Edit Product
+                     </div>
+                    <div class="col-6 col-sm-4 col-lg-2 firm">
+                      <button class="btn btn-default" onclick="javascript:window.location.href='<?php echo $base_url;?>product/lists'">Cancel</button>
+                      <button class="btn btn-scoend" type="submit"  onclick="javascript:validate();return false;">Submit</button>
+                      </div>
+ 				</div>
+ 			</div>
+			<form class="form-horizontal form-groups-bordered" role="form" id="form" method="post" action="<?php echo $base_url;?>product/edit/<?php echo $id; ?>" enctype="multipart/form-data" >
+ 			<div class="panel-body">
+				
+					<INPUT TYPE="hidden" NAME="hidPgRefRan" VALUE="<?php echo rand();?>">
+					<INPUT TYPE="hidden" NAME="action" VALUE="edit_product">
+					<INPUT TYPE="hidden" NAME="hiddenaction" VALUE="<?php echo $id;?>">
+					
+					  <div class="form-group">
+                    <label class="col-sm-2 control-label" for="inputEmail">Select Category:</label>
+                    <div class="col-sm-5">
+                   
+                       <select id="categoryid" name="categoryid" class="form-control" onchange="selectsubcat(this.value);">
+								<option value="">Select Category</option>
+						<?php if($allcategory != '' && count($allcategory) > 0)
+								{ foreach($allcategory as $pro) { ?>
+						<option value="<?php echo $pro->id; ?>"<?php if($pro->id == $categoryid){ ?> selected = 'selected' <?php } ?>><?php echo $pro->cname; ?></option>
+						<?php  } }	 ?>
+						  </select>     
+                    </div>
+                    </div>	
+					
+			<div class="form-group">
+                    <label class="col-sm-2 control-label" for="inputEmail">Sub Category:</label>
+                    <div class="col-sm-5">
+                   <span id="prod2">
+				   <?php $subcatarray = explode(',',$subcatid);?>
+                       <select id="subcatid" name="subcatid[]" class="form-control" multiple="multiple" onchange="newaddcat(this.value);">
+								<option value="">Select Subategory</option>
+						<?php if($allcategory1 != '' && count($allcategory1) > 0)
+								{ foreach($allcategory1 as $pro) { ?>
+						<option value="<?php echo $pro->id; ?>"<?php if (in_array($pro->id, $subcatarray, true)) {
+    ?> selected = 'selected' <?php
+} ?>"><?php echo $pro->scname; ?></option>
+								<?php  } }	 ?>
+						  </select> 
+						  </span>    
+                    </div>
+                    </div>
+					
+				 
+					 
+					 <div class="form-group">
+                    <label class="col-sm-2 control-label" for="inputEmail">Select Colour:</label>
+                    <div class="col-sm-5">
+                    <?php $clrarray = explode(',',$colour);?>
+                       <select id="colour" name="colour[]" class="form-control" multiple="multiple">
+								<option value="">Select Colour</option>
+						<?php if($allcolour != '' && count($allcolour) > 0)
+								{ foreach($allcolour as $procolour) { ?>
+						<option value="<?php echo $procolour->id; ?>"<?php if (in_array($procolour->id, $clrarray, true)) {
+    ?> selected = 'selected' <?php
+} ?>"><?php echo $procolour->colourname; ?></option>
+								<?php  } }	 ?>
+						  </select> 
+						  </span>    
+                    </div>
+                    </div>
+					
+					
+				 
+					 
+				
+				<div class="form-group">
+                    <label class="col-sm-2 control-label" for="inputEmail">Pname:</label>
+                    	<div class="col-sm-5">
+                       		<input type="text" id="pname" name="pname" 
+					   		value="<?php echo $pname;?>" class="form-control">
+                   	 	</div>
+                    </div>
+					
+					
+					
+					
+	 
+                    
+				 
+					
+				<div class="form-group">
+                    <label class="col-sm-2 control-label" for="inputEmail">Itemcode:</label>
+                    	<div class="col-sm-5">
+                       		<input type="text" id="itemcode" name="itemcode" 
+					   		value="<?php echo $itemcode;?>" class="form-control">
+                   	 	</div>
+                    </div> 
+                    
+				<div class="form-group">
+                    <label class="col-sm-2 control-label" for="inputEmail">Short Desc:</label>
+                    	<div class="col-sm-5">
+                       		<input type="text" id="shortcode" name="shortcode" 
+					   		value="<?php echo $shortcode;?>" class="form-control">
+                   	 	</div>
+                    </div>
+					
+					<div class="form-group">
+					<label class="col-sm-2 control-label" for="inputEmail">Price:</label>
+					<div class="col-sm-5">
+					  <input type="text" id="price" name="price" class="form-control" value="<?php echo $price;?>">
+					</div>
+				</div> 
+				 <div class="form-group">
+                    <label class="col-sm-2 control-label" for="inputEmail">Discount:</label>
+                    	<div class="col-sm-5">
+                       		<input type="text" id="discount" name="discount" 
+					   		value="<?php echo $discount;?>" class="form-control">
+                   	 	</div>
+                    </div>
+					
+					<!--div class="form-group">
+                    <label class="col-sm-2 control-label" for="inputEmail">Select as featured product:</label>
+					<div class="col-sm-5">
+                       		<input type="checkbox" id="featured_product" name="featured_product"
+							<?php /* if($featured_product) {$ch = 'checked'; $val=1;}else{$ch = ''; $val=0;} */ ?> 
+					   		value=1 <?php echo $ch;?> class="form-control">		
+                   	 	</div>
+                    </div-->
+					
+					<!--size-->
+					 <div class="form-group">
+                    <label class="col-sm-2 control-label" for="inputEmail">Select Size:</label>
+                    <div class="col-sm-5">
+                    <?php $attrarray = explode(',',$size);?>
+                       <select id="size" name="size[]" class="form-control" multiple="multiple">
+								<option value="">Select Size</option>
+						<?php if($allattributes != '' && count($allattributes) > 0)
+								{ foreach($allattributes as $attribute) { ?>
+						<option value="<?php echo $attribute->id; ?>"<?php if (in_array($attribute->id, $attrarray, true)) {
+    ?> selected = 'selected' <?php
+} ?>"><?php echo $attribute->attribute; ?></option>
+								<?php  } }	 ?>
+						  </select> 
+						  </span>    
+                    </div>
+                    </div>
+					<!--size-->
+					
+					  
+							
+				 	 
+					<div class="form-group">
+                    <label class="col-sm-2 control-label" for="inputEmail">Description :</label>
+                    <div class="col-sm-5">
+                        <textarea  type="text" id="des" name="description" class="form-control" rows="10" cols="50"><?php echo $description;?></textarea>
+                    </div>
+                    </div>
+                    
+					
+ 				</div>
+ 			</div>
+ 		</div>
+	</div>
+ </form>
+ </div>
+  
+<?php include('include/footer.php');?>
+</body>
+</html>
+<script>
+CKEDITOR.replace('description',
+	{
+			filebrowserBrowseUrl : '<?php echo $http_host; ?>ckeditor/ckfinder/ckfinder.html',
+			filebrowserImageBrowseUrl : '<?php echo $http_host; ?>ckeditor/ckfinder/ckfinder.html?Type=Images',
+			filebrowserFlashBrowseUrl : '<?php echo $http_host; ?>ckeditor/ckfinder/ckfinder.html?Type=Flash',
+			filebrowserUploadUrl : '<?php echo $http_host; ?>ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
+			filebrowserImageUploadUrl : '<?php echo $http_host; ?>ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
+			filebrowserFlashUploadUrl : '<?php echo $http_host; ?>ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash'
+	});
+</script>

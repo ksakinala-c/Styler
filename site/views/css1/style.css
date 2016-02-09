@@ -1,0 +1,1334 @@
+ #header{
+	 height:80px;
+	 background-color:#fff;
+	 width:100%;
+	
+ }
+ 
+ .signaturecontent #theImg1{
+	 
+	 padding:4px;
+ }
+ .signaturecontent #theImg11{
+	 
+	 padding:4px;
+ }
+ 
+ 
+  .signaturecontent #theImg12{
+	 
+	 padding:38px;
+ }
+ 
+ 
+.placketcontent  #theImg {
+    padding: 20px;
+}
+.signaturecontent #theImg{
+    padding-top: 8px;
+padding-right: 15px;
+}
+ 
+
+.outercontent  #theImg {
+    padding: 58px;
+}
+ 
+ .outercontent  #theImg11 {
+    padding: 34px;
+}
+
+
+.outercontent  #theImg12 {
+    padding: 34px;
+}
+
+.innercontent #theImg {
+    padding-top: 8px;
+	padding-left:44px;
+}
+
+.innercontent #theImg1 {
+    padding-top: 8px;
+	padding-left:44px;
+}
+.innercontent  #theImg12 {
+    padding: 34px;
+}
+
+.innercontent #theImg13 {
+    padding-top: 8px;
+	padding-left:44px;
+}
+
+ .belt11  #theImg {
+    padding-top: 8px;
+	padding-left:44px;
+}
+
+
+
+
+.tpleat  #theImg {
+    padding-top: 8px;
+	padding-left:44px;
+}
+
+
+
+.tsidebtn  #theImg {
+    padding-top: 8px;
+	padding-left:44px;
+}
+
+
+
+.tbackpckt6  #theImg {
+    padding-top: 8px;
+	padding-left:44px;
+}
+
+.tbackpleat  #theImg {
+    padding-top: 8px;
+	padding-left:44px;
+}
+
+.backcontent .back11  #theImg {
+    padding-top: 8px;
+padding-right: 15px;
+}
+
+.bottamcontent .btm  #theImg {
+    padding-top: 8px;
+padding-right: 15px;
+}
+
+.placketcontent .plckt  #theImg {
+    padding-top: 8px;
+padding-right: 15px;
+}
+#theImg{
+	valign:middle;
+padding:35px;
+	}
+
+.sleevescontent #theImg{
+padding:68px;
+}
+
+
+.cuffscontent #theImg{
+	
+	padding:76px;
+	
+}
+	 
+	.pocketcontent  #theImg{
+	
+	padding:60px;
+	
+} 
+ 
+ #top_line{
+	 height:3px;
+	  background-color:#ccc;
+	  
+	 width:100%;
+ }
+ .container{
+	 padding-top:4px;
+ }
+ button.uppercase {
+    text-transform: uppercase;
+}
+
+#footer{
+	 height:100px;
+	 background-color:#ccc;
+	 width:100%;
+ }
+ #img1{
+	 position:absolute;
+	 padding-left:20%;
+	 
+ }
+#img2{
+	 position:absolute;
+	 padding-left:26%;
+	 
+ }
+#img3{
+	 position:absolute;
+	 padding-left:35%;
+	 
+ }
+#img4{
+	 position:absolute;
+	 padding-left:42%;
+	 
+ } 
+ #ho2.hover{
+	 
+	 
+ }
+ .car{
+ text-align:center;
+ display:none;
+ }
+
+
+li.im2{
+
+display:none;
+}
+
+.l{
+background:white;
+height:800px;
+
+} 
+.r{
+height:800px;
+background:#e6e6e6;
+}
+
+.shirtul li{
+padding:5px auto;
+box-sizing:border-box;
+border-radius:4px;
+background:#e6e6e6; 
+
+}
+
+.shirtul li a{
+ 
+color:#353863 !important;
+}
+
+
+#shirtcontent{
+
+display:none;
+
+
+}
+
+
+.fabriccontent{
+flot:left;
+width:100%;
+height:550px;
+overflow-y:scroll;
+background:;
+} 
+.product1{
+
+width:122px;
+height:170px;
+padding:2%;
+
+} 
+
+ #img1{
+
+background:url("images/shirt.png");
+height:500px;
+width:600px;
+} 
+.cuff1{
+	width:200px;
+	height:200px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/cuffs/round.jpg");	
+	
+}
+
+.cuff2{
+	width:200px;
+	height:200px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/cuffs/angle.jpg");	
+	
+}
+.cuff3{
+	width:200px;
+	height:200px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/cuffs/big_round.jpg");	
+	
+}
+.cuff4{
+	width:200px;
+	height:200px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/cuffs/big_angle.jpg");	
+	
+}.cuff5{
+	width:200px;
+	height:200px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/cuffs/square.jpg");	
+	
+}.cuff6{
+	width:200px;
+	height:200px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/cuffs/french.jpg");	
+	
+}
+
+
+
+
+
+ #img2{
+
+background:url("images/pant.png");
+height:500px;
+width:600px;
+} 
+
+ #img3{
+
+background:url("images/waist.png");
+height:500px;
+width:600px;
+} 
+
+ #img4{
+
+background:url("images/suit.png");
+height:500px;
+width:600px;
+} 
+
+
+ .img1{
+
+background:url("http://www.stylior.com/3dshirt/images/fabric/STY2015001/100X100.jpg");
+height:100px;
+width:100px;
+} .img2{
+
+background:url("http://www.stylior.com/3dshirt/images/fabric/STY2015002/100X100.jpg");
+height:100px;
+width:100px;
+} .img3{
+
+background:url("http://www.stylior.com/3dshirt/images/fabric/STY2015003/100X100.jpg");
+height:100px;
+width:100px;
+} .img4{
+
+background:url("http://www.stylior.com/3dshirt/images/fabric/STY2015004/100X100.jpg");
+height:100px;
+width:100px;
+} .img5{
+
+background:url("http://www.stylior.com/3dshirt/images/fabric/STY2015005/100X100.jpg");
+height:100px;
+width:100px;
+} .img6{
+
+background:url("http://www.stylior.com/3dshirt/images/fabric/STY2015006/100X100.jpg");
+height:100px;
+width:100px;
+} .img7{
+
+background:url("http://www.stylior.com/3dshirt/images/fabric/STY2015007/100X100.jpg");
+height:100px;
+width:100px;
+}.img8{
+
+background:url("http://www.stylior.com/3dshirt/images/fabric/STY2015009/100X100.jpg");
+height:100px;
+width:100px;
+}.img9{
+background:url("http://www.stylior.com/3dshirt/images/fabric/STY2015010/100X100.jpg");
+ 
+height:100px;
+width:100px;
+}.img10{
+background:url("http://www.stylior.com/3dshirt/images/fabric/STY2015039/100X100.jpg");
+
+height:100px;
+width:100px;
+}.img11{
+
+background:url("http://www.stylior.com/3dshirt/images/fabric/STY2015012/100X100.jpg");
+height:100px;
+width:100px;
+}.img12{
+
+background:url("http://www.stylior.com/3dshirt/images/fabric/STY2015013/100X100.jpg");
+height:100px;
+width:100px;
+}.img13{
+
+background:url("http://www.stylior.com/3dshirt/images/fabric/STY2015014/100X100.jpg");
+height:100px;
+width:100px;
+}.img14{
+
+background:url("http://www.stylior.com/3dshirt/images/fabric/STY2015015/100X100.jpg");
+height:100px;
+width:100px;
+}.img15{
+
+background:url("http://www.stylior.com/3dshirt/images/fabric/STY2015016/100X100.jpg");
+height:100px;
+width:100px;
+}.img16{
+
+background:url("http://www.stylior.com/3dshirt/images/fabric/STY2015017/100X100.jpg");
+height:100px;
+width:100px;
+}.img17{
+
+background:url("http://www.stylior.com/3dshirt/images/fabric/STY2015018/100X100.jpg");
+height:100px;S
+width:100px;
+}.img18{
+
+background:url("http://www.stylior.com/3dshirt/images/fabric/STY2015019/100X100.jpg");
+height:100px;
+width:100px;
+} 
+.hiddenfabric{
+ //border:1px solid #ccc;
+display:none;
+margin-left:2%;
+padding:30px;
+width:86%;
+height:550px;
+
+} 
+.buttonscontent ,.pocketcontent,.cuffscontent{
+//border:1px solid #ccc;
+margin-left:2%;
+}
+
+
+
+
+
+.slvimg{
+width:220px;
+height:150px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/icons/long.png");
+
+}
+.slvimg1{  
+width:220px;
+height:150px;
+
+background:url("http://www.stylior.com/3dshirt/images/icons/short.png");
+
+}
+
+.sleevescontent{
+margin-left:2%;
+//border:1px solid #ccc;
+padding:60px;
+display:none;
+width:80%;
+}
+
+.collarcontent{
+//border:1px solid #ccc;
+margin-left:2%;
+display:none;
+padding-left:30px;
+width:80%;
+
+}
+
+.cuffscontent{
+//border:1px solid #ccc;
+display:none;
+padding-left:30px;
+width:90%;
+//height:90%
+}
+.collarimg{
+
+height:110px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/collar/big_round.png");
+
+}.collarimg1{
+
+height:110px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/collar/cut_way.png");
+
+}.collarimg2{
+
+height:110px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/collar/dual_buttons.png");
+
+}.collarimg3{
+
+height:110px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/collar/big_round.png");
+
+}.collarimg4{
+
+height:110px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/collar/regular.png");
+
+}.collarimg5{
+
+height:110px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/collar/button_down.png");
+
+}.collarimg6{
+
+height:110px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/collar/stand.png");
+
+}.collarimg7{
+
+height:110px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/collar/collar_wide_spread.png");
+
+}.collarimg8{
+
+height:110px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/collar/big_round.png");
+
+}
+
+.cuffsimg{
+
+height:200px;
+width:200px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/cuffs/round.jpg");
+
+}
+
+.cuffsimg1{
+
+height:200px;
+width:200px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/cuffs/angle.jpg");
+
+}
+.cuffsimg2{
+
+height:200px;
+width:200px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/cuffs/big_round.jpg");
+
+}
+
+.cuffsimg3{
+
+height:200px;
+width:200px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/cuffs/big_angle.jpg");
+
+}
+.cuffsimg4{
+
+height:200px;
+width:200px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/cuffs/square.jpg");
+
+}
+
+
+.cuffsimg5{
+
+height:200px;
+width:200px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/cuffs/french.jpg");
+
+}
+.btnimg{
+
+height:105px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/buttons/01.png");
+
+}
+
+
+
+
+
+.btnimg1{
+
+height:105px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/buttons/02.png");
+
+}
+.btnimg2{
+
+height:105px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/buttons/03.png");
+
+}
+.btnimg3{
+
+height:105px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/buttons/04.png");
+
+}
+.btnimg4{
+
+height:105px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/buttons/05.png");
+
+}
+.btnimg5{
+
+height:105px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/buttons/06.png");
+
+}
+
+.btnimg6{
+
+height:105px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/buttons/white.png");
+
+}
+.btnimg7{
+
+height:105px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/buttons/08.png");
+
+}
+.btnimg8{
+
+height:105px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/buttons/09.png");
+
+}
+.btnimg9{
+
+height:105px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/buttons/10.png");
+
+}
+.btnimg10{
+
+height:105px;
+width:110px;
+background:url(" http://1373411880.rsc.cdn77.org/3dshirt/images/buttons/11.png");
+
+}
+.btnimg11{
+
+height:105px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/buttons/12.png");
+
+}
+.btnimg12{
+
+height:105px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/buttons/13.png");
+
+}
+.btnimg13{
+
+height:105px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/buttons/14.png");
+
+}
+.btnimg14{
+
+height:105px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/buttons/15.png");
+
+}
+
+.btnimg15{
+
+height:105px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/buttons/16.png");
+
+}
+.btnimg16{
+
+height:105px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/buttons/17.png");
+
+}
+.btnimg17{
+
+height:110px;
+width:110px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/buttons/18.png");
+
+}
+.btnimg18{
+
+height:105px;
+width:105px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/buttons/19.png");
+
+}.btnimg19{
+
+height:105px;
+width:105px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/buttons/20.png");
+
+}
+
+
+.pckt{
+height:150px;
+width:220px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/icons/pocket.png");
+
+}.pckt1{
+height:150px;
+width:220px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/icons/no_pocket.png");
+
+}
+
+.plckt{
+
+width:100px;
+height:40px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/signature_inner/none.png");
+
+}
+
+.plckt1{
+height:100px;
+width:60px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/icons/placket5.png");
+
+}.plckt2{
+
+height:100px;
+width:60px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/icons/placket4.png");
+
+}.plckt3{
+height:100px;
+width:60px;;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/icons/placket3.png");
+
+}
+
+.plckt4{
+height:100px;
+width:60px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/icons/placket2.png");
+
+}
+.plckt5{
+height:100px;
+width:60px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/icons/placket1.png");
+
+}
+
+
+
+
+
+
+.back11{
+
+width:100px;
+height:40px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/signature_inner/none.png");
+
+}
+
+.back1{
+height:100px;
+width:90px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/icons/side.png");
+
+}.back2{
+
+height:100px;
+width:90px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/icons/box.png");
+
+}.back3{
+height:100px;
+width:90px;;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/icons/dart.png");
+
+}
+
+
+
+
+.btm{
+
+width:100px;
+height:40px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/signature_inner/none.png");
+
+}
+
+.btm1{
+height:102px;
+width:90px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/icons/HEM1.png");
+
+}.btm2{
+
+height:102px;
+width:90px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/icons/HEM2.png");
+
+}.btm3{
+height:102px;
+width:90px;;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/icons/HEM3.png");
+
+}
+
+
+.sign{
+
+width:100px;
+height:40px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/signature_inner/none.png");
+
+}
+
+.sign1{
+width:100px;
+height:40px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/signature_inner/initail.png");
+
+}.sign2{
+
+width:100px;
+height:40px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/signature_inner/name.png");
+
+}
+
+
+
+.intialfont{
+height:40px;
+width:40px;;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fonts/archibald.png?v=3");
+
+}
+
+
+.intialfont1{
+
+width:40px;
+height:40px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fonts/bodoni.png?v=3");
+
+}
+
+.intialfont2{
+width:40px;
+height:40px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fonts/caviar.png?v=3");
+
+}.intialfont3{
+
+width:40px;
+height:40px;
+background:url("http://www.stylior.com/3dshirt/images/fonts/cylburn.png?v=3");
+
+}
+
+
+.intialclr{
+height:50px;
+width:40px;;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/colors/black.png");
+
+}
+
+.intialclr1{
+height:50px;
+width:40px;;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/colors/blood_red.png");
+
+}
+
+.intialclr2{
+
+width:40px;
+height:50px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/colors/blood_red.png");
+
+}
+
+.intialclr3{
+width:40px;
+height:50px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/colors/grey.png");
+
+}.intialclr4{
+
+width:40px;
+height:50px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/colors/navy.png");
+
+}
+.intialclr5{
+height:50px;
+width:40px;;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/colors/plum_maroon.png");
+
+}
+
+
+.intialclr6{
+
+width:40px;
+height:50px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/colors/royal_blue.png");
+
+}
+
+.intialclr6{
+
+width:40px;
+height:50px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/colors/white.png");
+
+}
+
+
+
+.intialmngrm{
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/placements/cuff-name-horizontal.png");
+
+}.intialmngrm1{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/placements/pocket_embroidery_normal.png");
+
+}
+.intialmngrm2{
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/placements/sleeve_placket_top_embroidery_normal.png");
+
+}
+
+
+.intialmngrm3{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/placements/top_cuff_embroidery_normal.png");
+
+}
+
+
+.namemngrm{
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/placements/left-bottom-seam.png");
+
+}.namemngrm1{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/placements/top_button_placket_embroidery_normal.png");
+
+}
+
+
+.outerimg{
+
+height:145px;
+width:220px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/icons/no_pocket.png");
+
+}
+
+
+.outerimg1{
+height:145px;
+width:220px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/icons/collar_cuff.png");
+
+}.outerimg2{
+
+height:145px;
+width:220px;
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/icons/collar.png");
+
+}
+
+
+.outerfab1{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015002/100X100.jpg");
+
+}
+
+.outerfab2{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015004/100X100.jpg");
+
+}
+.outerfab3{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015005/100X100.jpg");
+
+}
+.outerfab4{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015013/100X100.jpg");
+
+}
+.outerfab5{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015020/100X100.jpg");
+
+}
+.outerfab6{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015048/100X100.jpg");
+
+}
+.outerfab7{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015049/100X100.jpg");
+
+}
+.outerfab8{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015052/100X100.jpg");
+
+}
+
+
+
+.innerimg{
+
+height:40px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/inner-contrast/yes.png");
+
+}
+.innerimg1{
+
+height:40px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/inner-contrast/no.png");
+
+}
+
+
+
+.innerimg2{
+
+height:40px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/inner-contrast/inner-collar.png");
+
+}
+.innerimg3{
+
+height:40px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/inner-contrast/inner-cuff.png");
+
+}
+
+.innerimg4{
+
+height:40px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/inner-contrast/inner-placket.png");
+
+}
+
+
+.pantfab{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015001/700X400.jpg");
+
+}
+.pantfab1{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015002/700X400.jpg");
+
+}
+.pantfab2{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015004/700X400.jpg");
+
+}
+.pantfab3{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015005/700X400.jpg");
+
+}
+
+
+.belt11{
+
+height:40px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/signature_inner/none.png");
+
+}
+
+
+.belt1{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015005/700X400.jpg");
+
+}
+.belt2{
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015002/700X400.jpg");
+
+}
+
+.tpleat{
+
+height:40px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/signature_inner/none.png");
+
+}
+
+
+.tpleat1{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015048/700X400.jpg");
+
+}
+.tpleat2{
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015020/700X400.jpg");
+
+}
+
+
+.tpckt{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015005/700X400.jpg");
+
+}
+.tpckt1{
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015002/700X400.jpg");
+
+}
+
+.tsidebtn{
+
+height:40px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/signature_inner/none.png");
+
+}
+
+
+.tsidebtn1{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015048/700X400.jpg");
+
+}
+
+.tbackpckt6{
+
+height:40px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/signature_inner/none.png");
+
+}
+
+
+.tbackpckt5{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015048/700X400.jpg");
+
+}
+
+.tbackpckt4{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015049/700X400.jpg");
+
+}
+.tbackpckt3{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015052/700X400.jpg");
+
+}
+.tbackpckt2{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015024/700X400.jpg");
+
+}.tbackpckt1{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015018/700X400.jpg");
+
+}.tbackpckt{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015002/700X400.jpg");
+
+}
+
+
+
+
+.tbackpleat{
+
+height:40px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/signature_inner/none.png");
+
+}
+
+
+.tbackpleat1{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015048/700X400.jpg");
+
+}
+
+.tbackpleat2{
+
+height:100px;
+width:100px;
+
+background:url("http://1373411880.rsc.cdn77.org/3dshirt/images/fabric/STY2015002/700X400.jpg");
+
+}

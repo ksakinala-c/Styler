@@ -1,0 +1,110 @@
+ 
+  <link rel="stylesheet" href="include/jquery-ui.css">
+
+  <script src="include/jquery.js"></script>
+  <script src="include/jquery-ui.js"></script>
+
+<script>
+  $(function() {
+    $( "#slider-range" ).slider({
+      range: true,
+      min: 0,
+      max: 500,
+      values: [ 200, 400 ],
+      slide: function( event, ui ) {
+        $( "#amount" ).html( "Price Range : $" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+		$( "#amount1" ).val(ui.values[ 0 ]);
+		$( "#amount2" ).val(ui.values[ 1 ]);
+      }
+    });
+    $( "#amount" ).html( "Price Range : $" + $( "#slider-range" ).slider( "values", 0 ) +
+    " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+
+	$( "#amount1" ).val($( "#slider-range" ).slider( "values", 0 ));
+	$( "#amount2" ).val($( "#slider-range" ).slider( "values", 1 ));
+	
+  });
+  
+ 
+</script>
+  <script>
+   $("#handle").mouseout(function() {
+  alert('good');
+  }
+  </script>
+<style>
+body
+{
+	margin:0px auto;
+	padding:0px;
+	text-align:center;
+	background-color:#A9BCF5;
+	font-family:helvetica;
+}
+#total_items
+{
+	margin:0px auto;
+	padding:0px;
+	text-align:center;
+	color:#0B173B;
+	margin-top:50px;
+	border:2px dashed #013ADF;
+	font-size:20px;
+	width:200px;
+	height:50px;
+	line-height:50px;
+	font-weight:bold;
+}
+h1
+{
+margin-top:50px;
+color:#0B173B;
+}
+h1 p
+{
+	font-size:18px;
+	margin:0px;
+	text-decoration:underline;
+	color:black;
+}
+#amount
+{
+	color:#DF7401;
+	font-size:18px;
+	font-weight:bold;
+}
+#slider-range
+{
+	margin:0px auto;
+	padding:0px;
+	text-align:center;
+	width:500px;
+}  
+input[type="submit"]
+{
+	margin-top:20px;
+	width:120px;
+	height:50px;
+	background:none;
+	border:1px solid #0B0B3B;
+	color:#0B0B61;
+	font-size:20px;
+	font-weight:bold;
+}
+</style>
+
+
+
+<center>
+
+<p id="amount">Price Range : $100 - $300</p>
+
+<div id="slider-range" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-corner-all"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" id="handle" ></span><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 60%;"></span></div>
+
+<input type="text" id="amount1" name="amount1" value="100">
+<input type="text" id="amount2" name="amount2" value="300">
+
+
+
+
+</body></html>

@@ -1,0 +1,267 @@
+<?php
+include('include/header.php');?>
+<link rel="stylesheet" href="<?php echo $base_url_views; ?>css/auto.css">
+<script src="<?php echo $base_url_views; ?>js/auto.js"></script>
+<script src="<?php echo $base_url_views; ?>js/jquery.ui.js"></script>
+<script>
+function deletecategory(){
+	var checked = $("#form input:checked").length > 0;
+    if (!checked){
+        alert("Please select at least one record to delete");
+        return false;
+    }
+	if(confirm('Do you want to Delete?')){ $('#form').submit(); }
+}
+</script>
+<script>
+	function validate()
+	{
+		var title = $("#trackadd").val();
+		if(title == '')
+		{
+			alert('Please enter track details');
+			return false;
+		}
+		
+		$('#track').submit();
+	}
+</script>
+<script type="text/javascript">
+	$(document).ready(function($) {
+	
+		$('#reset').click(function(){
+				var base_url = '<?php echo $base_url.'product/order_detail'; ?>';
+				window.location = base_url;
+		});
+			$("#sbutton").click(function(){
+				var name = $("#cname").val();
+				
+				if(name=='')
+				{
+					alert("Please Enter atleast one search condition.");
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+		});
+
+
+		$(function() {
+		$.ajax({
+			url:'<?php echo $base_url; ?>product/ajaxlist_category',
+			type:'POST',
+			data:'',
+			success:function(msg)
+			{
+				//alert(msg);
+				var  c = msg.split(",");
+				var availableTags = [msg];	
+				$( "#cname" ).autocomplete({
+					source: c
+				});
+			}
+		});
+		});
+});
+</script>
+<script>
+function deletes()
+{
+	var checked = $("#form input:checked").length > 0;
+    if (!checked){
+        alert("Please select at least one record to delete");
+        return false;
+    }
+	if(confirm('Do you want to Delete?')){ $('#form').submit(); }
+}
+</script>
+<div class="main-content theme">
+  <ol class="breadcrumb bc-3">
+    <li><a href="<?php echo $base_url;?>home"><i class="entypo-arrow"></i>Home</a></li>
+    <li class="active"><strong>Order Management</strong></li>
+  </ol>
+ <form class="form-horizontal form-groups-bordered" role="track" id="track"  method="post" action="<?php echo $base_url;?>product/trackadd" enctype="multipart/form-data">
+			<INPUT TYPE="hidden" NAME="hidPgRefRan" VALUE="<?php echo rand();?>">
+			<INPUT TYPE="hidden" NAME="action" VALUE="trackadd">
+			<INPUT TYPE="hidden" NAME="id" VALUE="<?php echo $this->uri->segment(3); ?>">
+				<div class="form-group">
+					<label class="col-sm-1 control-label" style="color:blue;margin-left:30px;font-size: 15px;">Order Track </label>
+						<div class="col-sm-3">
+							<textarea id="trackadd" name="trackadd" class="form-control"></textarea>
+						</div>
+						<div class="col-sm-3">
+							<select name="status" id="status" class="form-control">
+								<option value="0" selected="selected">Pending</option>
+								<option value="1">Dispatched</option>
+								<option value="2">Delivered</option>
+							</select>
+						</div>
+				
+				 <div class="col-5 col-sm-3 col-lg-1 firm">
+                    <button class="btn btn-scoend" type="submit" onclick="javascript:validate();return false;">Submit</button>
+                  </div>
+				</div>	  
+				
+			</form>	
+ <div class="checker" id="uniform-titleCheck"><span>
+    <input type="checkbox" name="titleCheck" id="titleCheck" style="opacity: 0;">
+    </span></div>
+  </span>
+</div>
+<div role="grid" class="dataTables_wrapper form-inline" id="table-2_wrapper">
+<div class="row">
+<div class="col-xs-12 col-sm-12"><h6 class="main-title">Order Details</h6></div>
+     <div class="col-6 col-sm-12 col-lg-12 action">
+      <div class="end">
+       
+      </div>
+    </div>
+  </div>
+ 
+
+  <div class="row">
+  <div class="col-xs-12 col-sm-12">
+  <div role="grid" class="dataTables_wrapper form-inline" id="table-2_wrapper">
+    <form action="<?php echo $base_url."category/deletes";?>" method="post" enctype="multipart/form-data" id="form">
+      <INPUT TYPE="hidden" NAME="hidPgRefRan" VALUE="<?php echo rand();?>">
+      <table id="table-2" class="table table-bordered table-striped datatable dataTable" aria-describedby="table-2_info" style="float:left;">
+        <thead>
+          <tr role="row" class="bg">
+            
+            <!--<th class="sorting" role="columnheader" aria-controls="table-2" style="width: auto;">Id</th>-->
+			<th class="sorting" role="columnheader" aria-controls="table-2" style="width: auto;">Order No:</th>
+            <th class="sorting" role="columnheader" aria-controls="table-2" style="width: auto;">Name:</th>
+            <th class="sorting" role="columnheader" aria-controls="table-2" style="width: auto;">Mobile No:</th>
+            <th class="sorting" role="columnheader" aria-controls="table-2" style="width: auto;">Status:</th>
+			<th class="sorting" role="columnheader" aria-controls="table-2" style="width: auto;">Address</th>
+          </tr>
+            </tr>
+          
+        </thead>
+        <tbody role="alert" aria-live="polite" aria-relevant="all">
+
+			  
+                <?php
+				 
+				if($shippingdetails != '' && count($shippingdetails) > 0) {  
+				//print_r($shippingdetails);
+    			$k = '0'; 
+				?>  
+          
+		  <tr class="odd">
+            
+            <td class=" "><?php echo $shippingdetails->order_id; ?></td>
+			<td class=" "><?php echo $shippingdetails->fname; ?></td>
+			<td class=" "><?php echo $shippingdetails->smobno; ?></td>
+			<td class=" "><?php echo $orderdetails->order_status; ?></td>
+			<td class=" "><?php echo $shippingdetails->address; ?></td>
+           </tr>
+		  
+      
+          
+            
+          
+        </tbody>
+		
+      </table>
+	  </br>
+	  <table id="table-2" class="table table-bordered table-striped datatable dataTable" aria-describedby="table-2_info" style="float:left;">
+        <thead>
+          <tr role="row" class="bg">
+            
+            <!--<th class="sorting" role="columnheader" aria-controls="table-2" style="width: auto;">Id</th>-->
+			<th class="sorting" role="columnheader" aria-controls="table-2" style="width: auto;">Billing Address:</th>
+            
+			<th class="sorting" role="columnheader" aria-controls="table-2" style="width: auto;">Shipping Address</th>
+          </tr>
+            </tr>
+          
+        </thead>
+        <tbody role="alert" aria-live="polite" aria-relevant="all">
+
+			  
+                  
+          
+		 <tr class="odd">
+            
+           <td class=" "><?php echo $shippingdetails->address.",".$shippingdetails->address1.",".$shippingdetails->city.",".$shippingdetails->county.",".$shippingdetails->postcode; ?></td>
+		<td class=" "><?php echo $shippingdetails->saddress.",".$shippingdetails->saddress1.",".$shippingdetails->scity.",".$shippingdetails->scounty.",".$shippingdetails->spostcode; ?></td>
+			
+           </tr>
+     
+          
+             
+          
+        </tbody>
+		
+      </table>
+	  </br>
+	  <table id="table-2" class="table table-bordered table-striped datatable dataTable" aria-describedby="table-2_info" style="float:left;">
+        <thead>
+          <tr role="row" class="bg">
+            
+            <!--<th class="sorting" role="columnheader" aria-controls="table-2" style="width: auto;">Id</th>-->
+			<th class="sorting" role="columnheader" aria-controls="table-2" style="width: auto;">Product Name:</th>
+			<th class="sorting" role="columnheader" aria-controls="table-2" style="width: auto;">Size & Colour  </th>
+            <th class="sorting" role="columnheader" aria-controls="table-2" style="width: auto;">Quantity</th>
+			<th class="sorting" role="columnheader" aria-controls="table-2" style="width: auto;">Price:</th>
+
+          </tr>
+            </tr>
+          
+        </thead>
+        <tbody role="alert" aria-live="polite" aria-relevant="all">
+
+			  
+                  
+          
+
+			<?php if($orderitems != '' && count($orderitems) > 0)
+				{ foreach($orderitems as $orderitems) { 
+			print_r($orderitems);
+			?>
+		  <tr class="odd">
+			<td class=" "><?php echo $orderitems->order_item_name;?></td>
+			<td class=" "><?php 
+			$attrib = $this->attribute_model->getsize($orderitems->sizeid);
+			echo $attrib->attribute; ?>,
+			<?php 
+			$attrib = $this->attribute_model->getcolor($orderitems->colorid);
+			
+			echo $attrib->colourname; ?></td>
+			<td class=" "><?php echo $orderitems->product_quantity; ?></td>
+			 <td class=" "><?php echo number_format($orderitems->product_item_price,'2','.',''); ?></td>
+		</tr>
+			<?php }} ?>
+			
+		 <tr>
+		 <td colspan="3">Additional Charge:</td>
+			<td><?php echo $orderdetails->additionalcharge; ?></td>
+		 </tr>	
+		 <tr>
+			<td colspan="3">Total</td>
+			<td><?php echo $orderdetails->order_total; ?></td>
+			
+		 </tr>
+		 
+        <?php
+			 $k++;}
+			 ?>
+          
+		
+          
+             
+          
+        </tbody>
+		
+      </table>
+    </form>
+  </div>
+  </div>
+</div>
+</div>
+<?php include('include/footer.php');?>
+</body>
+</html>

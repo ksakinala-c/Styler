@@ -1,0 +1,1 @@
+function countMessage(e,a){var a=a||150;$(e).characterCounter({limit:a,counterSelector:".js-messageCharsRemaining",counterExceededCssClass:"display-block",onExceed:function(){$(".charLimit").removeClass("hidden"),$(".charLimit label").show()},onDeceed:function(){$(".charLimit").addClass("hidden")}})}$.jGrowl.defaults.pool=1,$.jGrowl.defaults.check=150;
